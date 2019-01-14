@@ -2,9 +2,7 @@
 
 ## Overview
 
-This repository contains the latex code for my personal thesis entitled **"Remote-Sensing Approach to Spatio-Temporal Analysis of Vegetation Cover in Dharamshala Tehsil Region, Indian Northwestern Himalayas"**.
-
-This thesis entails using the random forests ensemble machine learning algorithm to classify Landsat 8 surface reflectance data into various vegetation categories. Next, change detection techniques were used to identify sub-regions undergoing vegetation loss. The time period for analysis was from 2013-2017.
+This repository contains the latex code for my personal thesis entitled above. This thesis entails using the random forests ensemble machine learning algorithm to classify Landsat 8 surface reflectance data into various vegetation categories. Next, change detection techniques were used to identify sub-regions undergoing vegetation loss. The time period for analysis was from 2013-2017.
 
 The following repositories cover the methodologies of this thesis in further detail:
 
