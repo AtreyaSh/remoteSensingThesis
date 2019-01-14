@@ -32,4 +32,4 @@ $ gs -sDEVICE=pdfwrite -dPDFSETTINGS=/prepress -dCompatibilityLevel=1.4 -dNOPAUS
 
 ## Documents
 
-The directory `/docs` contains the thesis manuscriipt entitled `Thesis_Manuscript.pdf` and the thesis defense entitled `Thesis_Defense.pdf`.
+The directory `/docs` contains the thesis manuscript entitled `Thesis_Manuscript.pdf` and the thesis defense entitled `Thesis_Defense.pdf`.
