@@ -1,0 +1,428 @@
+\section{Literature Review}
+
+\subsection{Remote Sensing}
+
+\justify
+In order to proceed with the objective of this study, we must first expound on the concept of remote sensing; which ultimately forms the foundation of this study. According to \citealp{MK2011} (pp. 1):
+
+\justify
+\textit{“The science of remote sensing consists of the analysis and interpretation of measurements of Electromagnetic Radiation (\ac{emr}) that is reflected from or emitted by a target and observed or recorded from a vantage point by an observer or instrument that is not in contact with the target.”}
+
+\justify
+Remote sensing can be carried out via various platforms, such as from satellites, drones, and ground-based remote-sensing vehicles \citep{lwin2008}. Remote sensing can be classified into two broad categories; namely passive and active remote sensing. Passive remote sensing involves a sensor measuring natural radiation which is reflected and/or radiated by the Earth due to illumination from the sun \citep{lwin2008}. Active remote sensing involves a sensor emitting its own electromagnetic radiation (EMR) at a source and measuring the reflected radiation \citep{lwin2008}. 
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[trim={3.3cm 1.2cm 1.6cm 2.2cm},clip, width = 15cm]{FundamentalRemoteSensing_7}
+	\caption{Overview of the general remote sensing analysis process \citep{lwin2008}}\label{Fig5}
+\end{figure}
+\vspace{-12pt}
+
+\justify
+Remote sensing sensors measure different components of electromagnetic radiation that are reflected from the Earth. Optical sensors typically measure radiation from the visible (\ac{vis}), near infrared (\ac{nir}) and short-wave infrared (\ac{swir}) components of the electromagnetic spectrum (Figure\,\ref{Fig6}). Typical wavelengths of the above-mentioned radiation types can be found in Table \ref{table4}.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[trim={2.5cm 2.1cm 0.6cm 3.7cm},clip, width = 15cm]{FundamentalRemoteSensing_14}
+	\caption{Overview of the electromagnetic spectrum relevant to the remote sensing process \citep{lwin2008}}\label{Fig6}
+\end{figure}
+\vspace{-12pt}
+
+\subsubsection{Resolution Types}
+
+\justify
+Remote sensing data can be distinguished based on 3 key resolution types; namely spectral, spatial and temporal resolutions. Spectral resolution is related to the number of distinct bands present in the data. The larger the number of bands present in a given wavelength range, the finer the spectral resolution; leading to a greater ability for the sensor to distinguish wavelengths \citep{lwin2008}. Spectral resolutions for optical sensors can be largely classified into four categories \citepalias{crisp2001}:
+
+\begin{itemize}
+	\item [a) ] \textbf{Panchromatic:} Single channel detector sensitive to radiation from a broad wavelength range. It measures apparent brightness of targets with images typically resembling a black and white photograph.
+	\item [b) ] \textbf{Multispectral:} Multichannel detectors typically with 2 to 10 spectral bands wherein each channel is sensitive to radiation within a narrow wavelength range, producing a multilayer image showing brightness and spectral information of targets.
+	\item [c) ] \textbf{Superspectral:} More multichannel detectors ($>$10 bands) than multispectral imaging systems with narrower bandwidths and finer spectral characteristics.
+	\item [d) ] \textbf{Hyperspectral:} More multichannel detectors ($\geq$100 bands) than superspectral imaging systems; precise spectral information obtained allows more accurate characterisation and identification of targets.
+\end{itemize}
+
+\justify
+Optical sensors with sufficient spectral resolution in the VIR, NIR and SWIR bands will be important for this study; since these EMR types interact significantly with vegetation and therefore show meaningful patterns for vegetation identification and ultimately, classification \citep{lwin2008}.
+
+\justify
+Spatial resolution refers to the size of the smallest feature that can be detected in the image \citep{lwin2008}. Spatial resolution is also sometimes referred to as the "grid-size" of an image. Spatial resolution is an important property for distinguishing objects on the Earth's surface; especially in classifying vegetation cover. As an example, if one wishes to analyze an urban area with surrounding forests; one would require a remote sensing image that has a fine enough spatial resolution to distinguish the urban areas from the forested areas. If the resolution is too coarse, then the urban and forested areas will appear together in one or more pixels, and therefore a distinction between them would not be possible.
+
+\justify
+Temporal resolution refers to the period of time that a remote sensing satellite takes to complete one entire orbit cycle \citep{lwin2008}. This period typically spans several days to weeks for most optical sensor satellites \citep{lwin2008}. This is a particularly important component to consider when analyzing temporal changes of vegetation cover, since several images are needed in a timespan to analyze changes in vegetation cover. Furthermore, statistical analyses are necessary to minimize statistical noise and seasonal variations in vegetation cover. This can only be done with presence of sufficient images in a timespan. 
+
+\vspace{4pt}
+\begin{table}[H]
+	\centering
+	\small
+	\def\arraystretch{1.3}
+	\begin{threeparttable}
+		\caption{EMR type, bands and associated wavelengths measured by typical optical sensors \citepalias{crisp2001}}
+		\label{table4}
+		\begin{tabular}{L{5.2cm} L{5cm} L{4.1cm}}
+			\toprule[0.25mm]
+			EMR Type & EMR Band & Wavelength (nm)\\
+			\midrule[0.35mm]
+			Infrared   & SWIR    & 1500 – 3000 \\
+			& NIR   & 700 – 1500 \\\\[-0.3cm]
+			Visible Light   & Red   & 610 – 700\\
+			& Orange & 590 – 610 \\
+			& Yellow   & 570 – 590 \\
+			& Green   & 500 – 570 \\
+			& Blue   & 450 – 500 \\
+			& Indigo   & 430 – 450 \\
+			& Violet   & 400 – 430 \\
+			\bottomrule[0.25mm]
+		\end{tabular}
+	\end{threeparttable}
+\end{table}
+
+\subsubsection{Surface Reflectance}
+
+\justify
+It is important to note that raw remote sensing data collected from satellites is not suitable for complex applications such as vegetation classification. In order to prepare the remote sensing data for such use, the data must undergo certain pre-processing to minimize errors of the raw remote sensing data. Pre-processing includes, for example, geometric and radiometric correction \citep{lwin2008}. Geometric correction serves to correct the acquired image for geometric distortion due to the relative motion between the Earth and satellite, and further specific imaging conditions such as oblique viewing \citepalias{crisp2001}. Ground control points (\ac{gcp}s) are often useful for geometric correction by registering acquired images to a precise map. Radiometric correction serves to correct for an uneven sensor response over an entire image \citepalias{crisp2001}. This is related to a technical errors at the sensor itself. Several other factors such as Earth-Sun distance can also be taken into consideration for pre-processing purposes.
+
+\justify
+A common end product of these pre-processing corrections is the at-sensor spectral reflectance, which is defined as the ratio of radiant exitance [W m$^{-2}$] from the Earth to the incoming irradiance [W m$^{-2}$] from the sun, for a given location, point in time and band of the EMR spectrum \citep{sch2009}. Despite it being tedious to calculate and correct, the at-sensor reflectance is still not entirely useful in analyzing vegetation cover, since the at-sensor spectral reflectance can still be affected by factors such as atmosphere, terrain and the angle of the sun which are independent of vegetation cover \citep{lwin2008, landsat2009}. Many remote sensing data providers such as the USGS offer further correction processes such as atmospheric and terrain correction in order to produce an approximate value for the spectral reflectance which would be recorded at the surface of the Earth; better known as \textit{surface reflectance} \citep{landsat2009}. Surface reflectance refers to the fraction of incoming solar radiation that is reflected from the Earth's surface without influence from other factors such as the atmosphere, terrain and angle of the sun.
+
+\justify
+Various studies have shown surface reflectance in the visible light and infrared EMR spectrum to be useful in identifying and classifying vegetation cover \citep{lwin2008, SM2005}. This is due to the significantly distinguishable spectral patterns in surface reflectance of vegetation and surrounding areas such as bare soil and urban cover. This concept is illustrated in Figure \ref{Fig7}.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[trim={0 0.7cm 0 1cm},clip, width = 15.5cm]{Reflexionskurven}
+	\caption{Surface reflectance signatures of water, soil and vegetation \citep{SM2005}}\label{Fig7}
+\end{figure}
+\vspace{-12pt}
+
+\justify
+Finally, even after correcting an at-sensor reflectance image for geometric, radiometric, atmospheric and terrain related errors; there are still certain residual errors that can affect the quality of the resulting surface reflectance image \citep{landsat2009, lwin2008, landsat2016}. Such errors can arise because of clouds, snow, large water bodies and haze. In order to correct these factors, remote sensing data providers sometimes run an additional quality assessment (\ac{qa}) algorithm to check for possible occurrences of these phenomena \citep{landsat2016}. From that, they provide an additional band with the corresponding information, so that the end-user can manually remove or augment areas that are affected by the aforementioned conditions. This ability to remove objects such as clouds, cloud shadows, snow and haze would be important for the study area, since it could have high cloud cover due to monsoons, snow cover due to winter seasons and haze due to forest fires \citep{Kumar2015, landsat2009}.
+
+\vfill
+
+\subsubsection{Remote Sensing Data Sources}
+
+Given the various remote sensing data parameters discussed in the previous section, we would now like to identify possible remote sensing data that could be useful for the objective of this study. In order to streamline this task, we will be looking for remote-sensing data with the following properties:
+
+\begin{itemize}
+	\item [1. ] Surface reflectance (\ac{sr}) product available
+	\item [2. ] High spatial resolution; less than or equal to 100 m
+	\item [3. ] High temporal resolution; less than or equal to 1 month. Regular availability of images for at least 2 years; optimally for 3-5 years to ensure a more stable analysis.
+	\item [4. ] High spectral resolution; more than or equal to 3 bands, with at least 1 band present in each of the VIS, NIR and SWIR regions of the EMR spectrum
+	\item [5. ] Availability of quality assessment band/algorithm to probe for disturbances such as clouds, cloud shadows, water bodies, snow and haze
+\end{itemize}
+
+\justify
+In connection with the above-stated criteria, Table \ref{table6} below summarizes the relevant publicly available remote sensing data and the properties that could be of interest for the objective of this study.
+
+\justify
+The datasets are offered by three organizations; namely USGS, the European Space Agency (\ac{esa}) and ISRO. USGS offers the Landsat 4-5, 7 and 8 SR products. ESA offers the Sentinel-2 Bottom of Atmosphere (\ac{boa}) reflectance product. Finally, ISRO offers the Resourcesat-1 LISS-III and AWiFs products. \\[-0.2cm]
+
+\begin{ThreePartTable}
+	\centering
+	\small
+	\def\arraystretch{1.2}
+		\begin{longtable}{L{2.7cm} L{2cm} L{1.7cm} L{2cm} L{3.4cm} L{1.65cm}}
+			\caption{Summary of publicly available remote sensing data relevant for the objective of this study \citepalias{landsat2006, landsat2016, sentinel2015}}\hskip25pt	
+			\label{table6}\\
+			\toprule[0.25mm]\\[-0.4cm]
+			Remote Sensing Data & Mission ~~~~Duration & Frequency (days) & Sensor & Bands & Resolution (m) \\\\[-0.4cm]
+			\midrule[0.35mm]\\[-0.25cm]
+			Landsat 4-5 ~~~~SR Product & Jul. 1982 - May 2012 & 16 & TM & 3 Bands (VIS) & 30 \\
+			&&&& 1 Band (NIR) & 30 \\
+			&&&& 2 Bands (SWIR) & 30 \\\\
+			Landsat 7 SR Product & Apr. 1999 - Present & 16 & ETM+ & 3 Bands (VIS) & 30 \\
+			&&&& 1 Band (NIR) & 30 \\
+			&&&& 2 Bands (SWIR) & 30 \\\\
+			Landsat 8 SR Product & Feb. 2013 - Present & 16 & OLI/TRS & 4 Bands (VIS) & 30 \\
+			&&&& 1 Band (NIR) & 30 \\
+			&&&& 2 Bands (SWIR) & 30 \\\\[-0.2cm]
+			\midrule[0.25mm]\\
+			\caption*{\raggedright\textit{*continued}} \hskip20pt\\
+			\midrule[0.25mm]\\[-0.4cm]
+			Remote Sensing Data & Mission ~~~~Duration & Frequency (days) & Sensor & Bands & Resolution (m) \\\\[-0.4cm]
+			\midrule[0.35mm]\\[-0.25cm]
+			Sentinel-2 BOA Product & Jun. 2015 - Present & 5 & MSI & 4 Bands (VIS/NIR) & 10 \\
+			&&&& 6 Bands (NIR/SWIR) & 20 \\\\[-0.3cm]
+			&&&& 3 Bands (VIS/NIR/SWIR) & 60 \\\\[-0.05cm]
+			Resourcesat-1: LISS-III & Oct. 2003 - Present & 24 & LISS-III & 3 Bands (VIS/NIR) & 24 \\
+			&&&& 1 Band (SWIR) & 24 \\\\
+			Resourcesat-1: AWiFS & Oct. 2003 - Present & 24 & AWiFS & 3 Bands (VIS/NIR) & 56 \\
+			&&&& 1 Band (SWIR) & 56 \\\\[-0.2cm]
+			\bottomrule[0.25mm]
+		\end{longtable}
+	 \end{ThreePartTable}
+
+\justify
+To further elaborate on the information above, the Landsat 4, 5, 7 and 8 SR products can be publicly accessed and downloaded via the various USGS geo-portals. For Sentinel-2 products, it is possible to download the at-sensor reflectance. In order to obtain the BOA data, the user would have to download the Sentinel-2 Toolbox and manually run a correction algorithm to obtain the final BOA product \citepalias{sentinel2015}. Finally, for the Resourcesat-1 remote sensing products from the ISRO, it is not entirely clear via the publicly available information whether a SR product is available or can be generated. As per the analysis of previous ISRO data under the "Study Area" chapter, there is a lack of clarity in information pertaining to the ISRO datasets. These products were nonetheless listed above to provide variety regarding remote sensing datasets produced from Indian-based organizations.
+
+\justify
+Regarding the availability of additional QA information, Landsat 4-5, 7 and 8 SR products all include an additional QA band with information on pixels displaying clouds, cloud shadows, snow/ice and water \citep{landsat2006, landsat2016}. The processed Sentinel-2 BOA product offers a Scene Classification Map (\ac{scm}), which classifies pixels into clouds, cloud shadows, vegetation, soils/deserts, water, snow, etc. \citepalias{sentinel2015}. Regarding the Resourcesat-1 data, it is unclear via publicly available information whether additional QA information is provided with the datasets. Based on Resourcesat-1 data that was downloaded and tested, it appears that neither QA information nor metadata regarding datasets is provided.
+
+\subsection{Image Classification Algorithms}\label{litrev}
+
+\justify
+Various studies have shown that objects on the Earth's surface, such as water, vegetation and urban areas, have significantly different surface reflectance spectral patterns \citep{lwin2008, SM2005}. With sufficient data and computing power, one can accurately classify these objects using modern machine-learning techniques and recorded surface reflectance data. Image classification is hereby defined as \textit{"the process of categorizing all pixels in an image or raw remotely sensed satellite data to obtain a given set of labels or land cover themes"} (\citealp{al2013image}; pp. 141). 
+
+\subsubsection{Classification Algorithm Categories}
+
+\justify
+Image classification algorithms can be broadly broken up into three categories; namely supervised, unsupervised and hybrid classification algorithms \citep{al2013image}. As a note, there are more complex ways of categorizing these algorithms; however, for simplicity we use the aforementioned broad categories. Table \ref{table8} below summarizes these broad categories.
+
+\justify
+Supervised classification involves the user defining certain classes to be identified within the data. With the defined classes, the user can then train the supervised classification algorithm to optimally recognize the desired classes within the given data. Unsupervised classification involves the algorithm working without prior knowledge of classes and identifying classes within the data based on optimized statistical grouping. 
+
+\begin{table}[H]
+	\centering
+	\small
+	\def\arraystretch{1.3}
+	\begin{threeparttable}
+		\caption{Summary of broad categories of image classification algorithms \citep{al2013image}}
+		\label{table8}
+		\begin{tabular}{L{5cm} p{5.7cm} L{0.2cm} L{3.3cm}}
+			\toprule[0.25mm]
+			Classification Category & Description && Examples\\
+			\midrule[0.35mm]
+			Supervised Classification   & Classes of data are identified before the analysis. Training and validation datasets are selected to train and run the algorithm. Final classification is conducted in accordance to the classes selected at the start.  && Maximum-likelihood, minimum distance, parallelepiped classification, random forests \\\\[-0.3cm]
+			Unsupervised Classification    & Prior information regarding classes is not known. The algorithm groups data together and defines classes based on optimized statistical criteria.   & & ISODATA, K-means clustering \\\\[-0.3cm]
+			Hybrid Classification  & Involves combining supervised and unsupervised algorithms in phases of classification to maximize the advantages of each technique.   & & \textbf{\textemdash} \\
+			\bottomrule[0.25mm]
+		\end{tabular}
+	\end{threeparttable}
+\end{table}
+
+\justify
+Both supervised and unsupervised classification techniques have advantages and disadvantages. Supervised classification algorithms are useful because they help the user to identify the exact classes that are of interest. However, they can be disadvantageous if the desired classes do not exhibit significantly independent trends in the given data which allow for classification. Unsupervised classification algorithms are advantageous because they are easy to apply and do not require any prior identification. They also provide the user with an optimized classification and grouping of the data. However, one disadvantage could be that the determined classes may not reflect real-life classes that are relevant or pertinent to the user. Furthermore, unsupervised classification algorithms would need to be re-run whenever new data is introduced. In order to maximize the advantages and minimize the disadvantages of supervised and unsupervised algorithms, hybrid classification algorithms are used in combining both algorithms types at different phases of classification \citep{al2013image}.
+
+\subsubsection{Data Partitioning and Accuracy Assessment}
+
+\justify
+No classification algorithm is perfect, and it would be an important to determine the accuracy of a classification algorithm. In order to discuss this further, we must first define three data partitions pertaining to classification algorithms \citep{AI2009}:
+
+\begin{itemize}
+	\item[1. ] \textbf{Training dataset}: Data used for training the algorithm. This allows the algorithm to tune its parameters to best fit the data. 
+	\item[2. ] \textbf{Validation dataset}: Data used to fine-tune the parameters of the classifier.
+	\item[3. ] \textbf{Test dataset}: Data used to assess the final unbiased accuracy of the classifier. 
+\end{itemize}
+
+\justify
+As a note, the three datasets apply fully to supervised classifiers. In the case of unsupervised classifiers; other data partitions and accuracy assessments may apply. It is also worth noting that some supervised classifiers, such as the Random Forests classifier, use a \textit{bootstrapping} method of optimizing classification \citep{AI2009}. Essentially, they omit the validation dataset and instead create sub-samples within the training dataset. They then classify each sub-sample and later optimize all sub-samples to find a fine-tuned overall classification. In such cases, only the training and test dataset would apply. As a general guideline, 70$\%$ of the available data is allocated to the training and validation datasets for building and refining the classification model \citep{mucherino2009}. The remaining 30$\%$ of data is allocated to the test dataset for final prediction accuracy of the classification model \citep{mucherino2009}.
+
+{
+	\renewcommand\extrarowheight{5pt}
+\begin{figure}[H]
+	\hskip-5pt
+\begin{tabular}{l|p{3.4cm}|p{3.7cm}|p{3.7cm}|c}
+	\multicolumn{2}{c}{}&\multicolumn{2}{c}{\bfseries True class \rm \vspace{4pt}}&\\
+	\cline{3-4}
+	\multicolumn{2}{c|}{}&Class 1& Class 2&\multicolumn{1}{c}{Total}\\
+	\cline{2-4}
+	\multirow{3}{*}{\parbox{2cm}{\centering \bfseries Predicted class \rm}}& Predicted class 1 & True predicted class 1 (a) & False predicted class 1 (b) & $a+b$\\
+	\cline{2-4}
+	& Predicted class 2 & False predicted class 2 (c) & True predicted class 2 (d) & $c+d$\\
+	\cline{2-4}
+	\multicolumn{1}{c}{} & \multicolumn{1}{c}{Total} & \multicolumn{1}{c}{$a+c$} & \multicolumn{    1}{c}{$b+d$} & \multicolumn{1}{c}{$N$}\\
+\end{tabular}
+\vspace{5pt}
+\caption{Simplified 2$\times$2 confusion matrix schematic}
+\label{fig9}
+\end{figure}
+}
+
+\justify
+After building and refining a classification model, one would need to assess the accuracy of the classification model. In order to do this, we would first need to construct a confusion matrix of the data. The confusion matrix has the same number of rows/columns as the number of classes in the data. For example, if one wishes to classify data into 4 classes, then the confusion matrix would be a 4$\times$4 square matrix. A simplified 2$\times$2 confusion matrix has been illustrated in Figure \ref{fig9}. Key measures or metrics of accuracy assessment include classification accuracy, the Kappa coefficient, per-class producer's accuracy and per-class user's accuracy \citep{banko1998}. A summary of the aforementioned accuracy metrics can be found in Table \ref{table9}.
+
+\justify
+The accuracy assessment metrics can be broken into two main categories; namely overall accuracy assessment and per-class accuracy assessment. Classification accuracy ($C$) and the Kappa coefficient ($\hat{K}$) fall under overall accuracy assessment. The classification accuracy is the ratio of correctly classified elements to the total population of elements analyzed \citep{banko1998}. The values of $C$ can range from 0 to 1, where 0 represents no correctly predicted elements and 1 represents all elements being correctly predicted \citep{banko1998}. This provides a general notion of accuracy, but is not sufficient for a wholesome analysis. The Kappa coefficient can be augmented to provide a better analysis of general accuracy. The Kappa coefficient measures the proportion of correct predictions after removing an estimated proportion of correct predictions that occurred due to chance \citep{banko1998}. Essentially, it measures the proportion of correct predictions that occurred without the effect of chance. The Kappa coefficient tends to 1 as chance agreements decrease, and tends to 0 and negative values as chance agreements increase \citep{banko1998}. 
+
+\justify
+The next category is per-class accuracy assessment; which involves metrics that measure the accuracy of each class. The producer's accuracy ($P_i$) for the $i$th class measures the correct predictions as a proportion of the total population of the $i$th class \citep{banko1998}. This provides the producer with an idea of how accurate the classification of the $i$th class was. The producer's accuracy is sometimes also referred to as "sensitivity" or "recall". The user's accuracy ($U_i$) for the $i$th class measures the correct predictions as a proportion of the total predictions of the $i$th class \citep{banko1998}. This provides the end-user with an idea of how accurate the prediction of each class will be. This allows the user to determine the reliability of the classified data \citep{banko1998}.
+
+\begin{table}[H]
+	\centering
+	\small
+	\def\arraystretch{1.5}
+	\begin{threeparttable}
+		\caption{Descriptions of relevant accuracy assessment metrics}
+		\label{table9}
+		\begin{tabular}{L{4cm} L{0.05cm} L{3cm} L{0.8cm} L{6cm}}
+			\toprule[0.25mm]
+			Metric type && Metric && Equation\\
+			\midrule[0.35mm]\\[-0.5cm]
+			Overall accuracy ~~~~~~~~assessment && Classification ~~~~~~~accuracy ($C$) && \multirow{2}{*}{$C = \myfrac[2pt]{\sum\text{True predictions}}{\sum\text{Total population}}$}  \\\\[0.15cm]
+			&& Kappa coefficient ($\hat{K}$)* && \multirow{2}{*}{$\hat{K}=\myfrac[3pt]{N\cdot\sum_{i=1}^{r} X_{ii }-\sum_{i=1}^{r}X_{i+}X_{+i}}{N^2-\sum_{i=1}^{r}X_{i+}X_{+i}}$}   \\\\[0.15cm]
+			Per-class accuracy ~~~~~~~~~~~~assessment && Producer's ~~~~~~~~accuracy ($P_i$) for the $i$th class && \multirow{2}{*}{$P_i = \myfrac[2pt]{\sum\text{True predictions of class } i}{\sum\text{Total population of class }i}$}\\\\[-0.2cm]
+			&& User's accuracy ($U_i$) for the $i$th class && \multirow{2}{*}{$U_i = \myfrac[2pt]{\sum\text{True predictions of class 	} i}{\sum\text{Total predictions of class }i}$}  \\\\[-0.3cm]
+			\bottomrule[0.25mm]
+		\end{tabular}
+		\vspace{5pt}
+		\caption*{*Where $N$ is the total population, $r$ is the total number of rows or columns in the confusion matrix, $X_{ii}$ is the observation in row $i$ and column $i$ of the matrix, $X_{i+}$ is the marginal sum of row $i$, and $X_{+i}$ is the marginal sum of column $i$.}
+	\end{threeparttable}
+\end{table}
+\vspace{-0.9cm}
+
+\justify
+When determining the accuracy of a classification algorithm, it is necessary to determine and compare various accuracy assessment metrics \citep{banko1998}. A common mistake would be to cite a single metric, such as overall classification accuracy. Even though a value of the classification accuracy may be high, its performance on the other metrics may nonetheless be low. Therefore, it is important to evaluate multiple metrics to have a holistic idea of accuracy \citep{banko1998}.
+
+\subsubsection{Random Forests Algorithm}
+
+\justify
+The random forests algorithm is a supervised classification algorithm which uses an ensemble of decision trees in order to classify variables \citep{Breiman2001}. The random forests algorithm was developed in \citet{Breiman2001} and has shown extensive success in various fields such as medicine, ecology and more recently remote sensing \citep{Machado2015, BELGIU201624}. 
+
+\justify
+The random forests algorithm randomly and iteratively creates $N$ sub-samples of the training data with replacement \citep{Breiman2001}. A bootstrap aggregated (a.k.a. bagging) technique is applied in the algorithm to create $N$ distinct optimized decision trees; otherwise known as a forest of decision trees \citep{Breiman2001}. Data is passed through the random forests model and evaluated by each of the $N$ decision trees. The statistical mode of the $N$ decision trees would represent the final decision of the random forests model \citep{Breiman2001}. This method of bagging allows the random forests algorithm to create a more robust model compared to using a single classification tree \citep{Breiman2001}. This operating procedure of the random forests algorithm is illustrated below in Figure \ref{fig15}.
+
+\justify
+As to the exact construction of the decision trees, the following iterative process is implemented \citep{Hastie2009}:
+\begin{itemize}
+	\item [1. ] For $k$ = 1 to $N$;
+	\begin{itemize}
+		\item [(a) ] Draw a bootstrap sample $\mathbf{Z^*}$ of size $B$ from the training data.
+		\item [(b) ] Grow a random-forest tree $T_k$ to the bootstrapped data, by recursively repeating the following steps for each terminal node of the tree, until the minimum node size $n_{min}$ is reached.
+		\begin{itemize}
+			\item [i. ] Select $m$ variables at random from the $p$ variables.
+			\item [ii. ] Pick the best variable/split-point among the $m$.
+			\item [iii. ] Split the node into two daughter nodes.
+		\end{itemize}
+	\end{itemize}
+	\item[2. ] Output the ensemble of trees $\{T_k\}^N_1$.
+\end{itemize}
+
+\begin{equation}
+\label{eqn1}
+\hat{C}^N_{rf}(x) = \textit{mode} ~\{\hat{C}_{k}(x)\}^{N}_{1}	
+\end{equation}
+
+\begin{equation}
+\label{eqn2}
+\mathrm{Var}\,\Bigg(\dfrac{1}{N}\sum\limits_{k=1}^N T_k\Bigg)= \rho \sigma^2 + \dfrac{1-\rho}{N}\sigma^2
+\end{equation}
+
+\justify
+Equation \ref{eqn1} mathematically symbolizes the process by which the random forests model selects the majority vote from the $N$ decision trees \citep{Hastie2009}. $\hat{C}_{k}(x)$ is the vote of the $k$th tree for data element $x$ and $\hat{C}^N_{rf}(x)$ is the majority vote of the random forests model for data element $x$. Equation \ref{eqn2} shows the variance of the mean value of the $N$ decision trees. Here, $\sigma^2$ is the variance of each random tree in the dataset and $\rho$ is the positive pairwise correlation of the trees. As can be seen in Equation \ref{eqn2}, the variance of the overall mean decision of the trees reduces as the trees become less correlated and as the number of trees increase \citep{Hastie2009}. 
+
+\justify
+In order to internally assess the accuracy of the random forests algorithm, the algorithm cross-validates out-of-bag samples and calculates out-of-bag error estimates \citep{Breiman2001}. To explain this concept better, let the training data be $\mathbf{Z}$, the $k$th bagging sub-sample created be $\mathbf{Z^*_k}$ and the corresponding $k$th decision tree created be $T_k$; where $k \in \mathbb{N}$ and $k \leq N$. During the bagging process, roughly two-thirds of the data are used to create each decision tree while one-third of the data is left out. The data that is left out in the creation of each decision tree is known as the out-of-bag sample. In order to calculate the out-of-bag error estimate for the entire random forest model; each element $x_i \in \mathbf{Z}$ is evaluated by the decision trees which were created without using the element $x_i$ in its sub-sampled dataset $\mathbf{Z^*_k}$. This process of classifying is known as the out-of-bag classifier. The combined error recorded through the out-of-bag classifier produces a general out-of-bag error estimate for the entire random forests model. This is often regarded as an accurate and unbiased measure of the general error of the random forests model \citep{Breiman2001}. Naturally, the complement of this measure of error would be the measure of accuracy. 
+
+\justify
+Overall, the random forests algorithm is a robust supervised classification algorithm due to the fact that outputs of the algorithm are predicted by an ensemble of decision trees instead of a single tree \citep{Machado2015}. Furthermore, due to the bagging procedure and out-of-bag estimates; the random forests algorithm is less prone to issues such as over-fitting and outliers; which provides the algorithm with an edge over other machine-learning algorithms \citep{Machado2015}. An interesting property of the random forests algorithm is its ability to generate relative variable importance \citep{Machado2015}. The algorithm internally permutes classification parameters and with that, generates a measure of how important each classification criterion is for the overall classification process \citep{Breiman2001}. This can provide the end-user with an idea of which classification criterion affects the classification process the most.
+
+\begin{figure}[H]
+	\centering
+	{
+		\setlength{\fboxsep}{10pt}%
+		\setlength{\fboxrule}{0.01pt}%
+		\fbox{\includegraphics[trim={2.05cm 17.1cm 2.05cm 3.25cm},clip, width = 15cm]{M2015_5}} 
+	}
+	\caption{Operating procedure of the random forests algorithm; (A) training data is firstly sub-sampled to create $N$ sub-samples and consequently $N$ decision trees; (B) $N$ decision trees then assess the test data and the statistical mode of the decisions is the final decision of the random forests model \citep{Machado2015}}\label{fig15}
+\end{figure}
+\vspace{-18pt}
+
+\justify
+A limitation of the random forests algorithm, as with other machine-learning algorithms, is that it works well when training data is balanced \citep{Machado2015, phung2009}. That is to say, the random forests algorithm would optimally classify data when the numbers of datasets from each class are approximately equal. However, in reality training datasets tend to be imbalanced; with more data in some classes than in others. This would lead to the creation of majority and minority classes. In such cases, the random forests algorithm would intrinsically classify majority classes better than minority classes  \citep{phung2009}. This would mean that the rate of misclassification would be higher for minority classes  \citep{phung2009}.
+
+\subsection{Vegetation Classes and Statistical Trend Analysis}
+
+\subsubsection{Ecological Perspective}
+
+\justify
+Many studies have been focused on acquiring remote-sensing data, such as surface reflectance data, and running supervised classification algorithms on this data in order to classify vegetation cover in a region into specific classes of interest \citep{joshi2001, puletti2016, HPRS2009}. These classes of interest are not given or fixed; rather the producer would have to decide the most appropriate way to partition data into classes. Table \ref{table5} below shows a categorization of vegetation cover in the study area and the larger Kangra district acquired through literature review. As a note, this categorization may not necessarily be relevant to remote-sensing, but it is grounded on pertinent ecological characteristics. This could represent one possible way to divide vegetation cover into distinct classes.
+
+\justify
+The categorizations in Table \ref{table5} represent differentiating vegetation cover based on ecological characteristics. Although these classes may be relevant from an ecological point-of-view based on on-the-ground studies, these vegetation classes may not necessarily be relevant from a remote-sensing perspective, possibly because these vegetation classes may not show significantly different spectral patterns that can be distinguished using classification algorithms. 
+
+\begin{table}[H]
+	\small
+	\def\arraystretch{1.7}
+	\begin{threeparttable}
+		\centering
+		\caption{Classification of forests in Kangra District \citepalias{HDR2009, NSC1999}}
+		\label{table5}
+		\begin{tabular}{L{5.7cm} p{9.35cm}}
+			\toprule[0.25mm]
+			Forest Types & Description/Key Species \\
+			\midrule[0.35mm]
+			Dry Alpine Forests  & Open and sparse forests with primarily
+			xerophytic plant species of the genera \textit{Juniperus, Lonicera} and \textit{Rhodedendron}. Typically found above altitudes of 3,600 m a.m.s.l.  \\
+			Moist Alpine Scrub Forests  & These forests are found below the snow-line but above
+			the main tree-growth line. Generally, grass is found on the southern aspect and scrub on the
+			northern aspect. \textit{Salix spp.,} and plant species of the genera \textit{Rhodedendron, Artemesia} and \textit{Viburnum} are found here. Medicinal herbs and plants with local names \textit{guggal} and \textit{karru} can be found in
+			these forests. Typically found above altitudes of 3,600 m a.m.s.l.  \\	
+			Sub-Alpine Forests   & These forests occur in transition regions between alpine and temperate zones. \textit{Betula utilis} and \textit{Quercus semecarpifolia} are two common species found in these
+			forests. These forests are often used as grazing grounds by migratory herds of sheep and goats \\
+			Himalayan Moist Temperate Forests  & \textit{Cedrus deodara, Pinus wallichiana} and \textit{Taxus wallichiana} are common species found in these mixed forests. Typically found in altitudes between 1,500 - 3,600 m a.m.s.l. \\
+			Sub-Tropical Pine Forests  & The predominant species is \textit{Pinus roxburghii}, with other species such as \textit{Pyrus pashia} and \textit{Quercus leucotrichophora} occurring sparsely. Typically found in altitudes between 600 - 1,700 m a.m.s.l.  \\
+			Sub-Tropical Broad-Leaved Hill Forests  &Common species include \textit{Shorea robusta, Anogeissus latifolia} and \textit{Terminalia tomentosa}. Typically found in altitudes below 1,000 m a.m.s.l.  \\
+			\bottomrule[0.25mm]
+		\end{tabular}
+	\end{threeparttable}
+\end{table}
+
+\subsubsection{Remote-Sensing Perspective}
+
+\justify
+In light of this, other vegetation cover classes can be used based on remote-sensing studies. Table \ref{table10} below summarizes vegetation and other corresponding classes used in various remote-sensing studies to create effective vegetation and adjacent land cover maps. As we can see, there are multiple ways of categorizing vegetation and land cover into distinct classes. Land cover products such as the ISRO LULC Space Based Information Support for Decentralized Planning (\ac{sisdp}) and MODIS Global Land Cover products have many ($>$10) vegetation and land cover classes because their data spans an entire country or countries. Therefore, their classification needs to include a large variety of possible classes within the entire country or countries. On the other hand, \citealt{joshi2001} and \citealt{HPRS2009} focus on vegetation cover classification within the state of Himachal Pradesh. Therefore, they are able to optimize their classification by reducing the number of possible classes to those that are most relevant to the study region. This is further exemplified by \citealt{puletti2016}, which was conducted in the Tuscany region in Italy. Due to this area having a relatively small geographical area of $\sim$1,100 km$^2$, the team was able to further simply their vegetation cover classification into simply 3 classes. This decision was justified because their study focused mainly on conifer and broadleaved forests. 
+
+\begin{table}[H]
+	\small
+	\def\arraystretch{1.7}
+	\begin{threeparttable}
+		\centering
+		\caption{Summary of vegetation and land cover classes used by various studies and organizations}
+		\label{table10}
+		\begin{tabular}{L{5.4cm} L{0.3cm} p{8.65cm} L{0.01cm}}
+			\toprule[0.25mm]
+			Study/Data Source && Vegetation/Land Cover Classes &\\
+			\midrule[0.35mm]
+			ISRO LULC SIS-DP, 1:10,000  && Built up (3 sub-classes), agriculture (crop land), agriculture (plantation), agriculture (curren shifting cultivation), forest, forest  (forest plantation), forest (swamps/mangroves), grass/grazing, barren/unculturable/wastelands (5 sub-classes), rann, wetlands/water bodies (3 sub-classes), snow/glacial area&\\
+			NASA MODIS Global Land Cover  && Water, evergreen needle leaf forest, evergreen broadleaf forest, deciduous needle leaf forest, deciduous broadleaf forest, mixed forest, closed shrublands, open shrublands, woody savannas, savannas, grasslands, permanent wetlands, croplands, urban and built-up, cropland/natural vegetation mosaic, snow and ice, barren or sparsely vegetated, unclassified &\\	
+			\citealp{joshi2001}  && Temperate conifer forest, temperate mixed forest, sub-alpine forest, tropical forest, broad-leaved forest, alpine meadows/scrub &\\
+			\citealp{HPRS2009}  && Forest, agriculture, grass/shrub, rocks/non-vegetation, snow/clouds, glaciers, water body &\\	
+			\citealp{puletti2016}  && Conifer forest, broadleaved forest, other land cover (\ac{lc}) &\\	
+			\bottomrule[0.25mm]
+		\end{tabular}
+	\end{threeparttable}
+\end{table}
+
+\justify
+Vegetation classification into distinct classes does have some key limitations. If the producer wishes to divide the dataset into many classes, such as in the case of the MODIS Global Land Cover; the producer would require an active data inventory of all the relevant classes in order to train the classification algorithm. This may be a time-consuming process, especially if the data does not already exist; as this would involve the producer conducting field-studies in order to acquire the required data. Next, vegetation cover may not always remain the same throughout the year due to seasonal changes. As a result, a classification algorithm may show significant changes due to seasonality; but this may not necessarily imply a significant loss or gain of vegetation. This effect due to seasonality would need to be accounted for in order to conduct meaningful analyses. 
+
+\justify
+Lastly, there is an intrinsic problem of classifying data into distinct classes. Due to the limited resolution of remote-sensing data, sometimes a single pixel may contain two or more vegetation or land cover types \citep{al2013image}. As a result, the classification algorithm would approximate the specific pixel into one vegetation or land cover type; which may not necessarily be an accurate depiction of the ground reality. This was the case in \citealt{puletti2016}, where vegetation cover was classified into coniferous and broad-leaved forests. In this study, there were some regions with mixed coniferous and broad-leaved forests; which resulted in ambiguity in classification. However, it was justified in \citealt{puletti2016} that even mixed forest types contained a majority of either coniferous or broad-leaved vegetation cover, so the classification into either binary categories would still be approximately correct. 
+
+\justify
+Another means of mitigating the issue of distinct classes would be to use \textit{soft} classification algorithms, such as the fuzzy set classification algorithm \citep{al2013image}. These algorithms compute the probabilities of each pixel being a given vegetation or land cover type and therefore, take into account the heterogeneity of real-world landscapes \citep{al2013image}. As a result, the producer would have clearer idea of the nature of each pixel. This would be more useful in identifying mixed land cover types. An example of such a dataset is the USGS Landsat Tree Cover Continuous Fields mentioned in Table \ref{table7}.
+
+\subsubsection{Mann-Whitney U Test}
+
+\justify
+The Mann-Whitney $U$ test is a non-parametric statistical procedure for comparing two ordinal data samples that are mutually independent from one another \citep{corder2011}. This is in contrast to the Wilcoxon's rank sum test which is used to test two mutually dependent or paired samples \citep{corder2011}. These can also be seen in Figure \ref{fig18}. The two-tailed Mann-Whitney $U$ test has a null hypothesis $H_0$; which states there is no stochastic tendency for one dataset to be significantly greater or lesser than that of the other \citep{corder2011}. The alternative hypothesis $H_1$ of the two-tailed Mann-Whitney $U$ test states that there is a significant difference between the central stochastic tendency of the two samples \citep{corder2011}. The null and/or alternative hypotheses can be modified to give a one-tailed Mann-Whitney $U$ test; which could check whether one sample shows significantly greater or lower stochastic tendency compared to the other sample.
+
+\justify
+In order to conduct the Mann-Whitney $U$-test, one would first need to calculate the $U$-test statistic for both samples. Equation \ref{eqn3} below represents the various parameters used to calculate the $U$-test statistic. Here, $U_i$ represents the $U$-test statistic for the $i$th sample, $n_1$ and $n_2$ represent the number of data elements in sample 1 and 2 respectively and $\sum R_i$ represents the sum of uniquely ordered ranks of the data elements in the $i$th sample. 
+
+\begin{equation}
+\label{eqn3}
+U_i = n_1n_2 + \dfrac{n_i(n_i+1)}{2} - \sum R_i
+\end{equation}
+
+\justify
+During the calculation of the $U$-test statistic, there is a possibility that certain data elements occur repeatedly. In this case, the elements cannot be ordered uniquely as certain elements would have the same rank. These situations are referred to as "ties" and can be overcome by averaging the otherwise ascending ranks of the tied data elements.
+
+\begin{figure}[H]
+	\centering
+	{
+		\setlength{\fboxsep}{10pt}%
+		\setlength{\fboxrule}{0pt}%
+		\fbox{\includegraphics[trim={2cm 5.3cm 11.5cm 17.8cm},clip, width = 13cm]{IndianJOphthalmol59285-6961487_192014_1}}
+	}
+	\caption{Decision tree for choices of statistical tests based on data types \citep{nayak2011}}\label{fig18}
+\end{figure}
+
+
+\justify
+Once the $U$-test statistic has been calculated for the two samples of interest, one would then choose the $U$-test statistic value which has the smallest value. This $U$-test statistic is then compared with a table of critical $U$-test values at a given significance level, given respective samples sizes and a given type of test; either two-tailed or one-tailed. A significance level of $\alpha=0.05$ is commonly used in scientific studies. If the observed $U$-test statistic is greater than the critical $U$ value, then the p value is greater than 0.05 and therefore, we retain the null hypothesis. If the observed $U$-test statistic is smaller than or equal to the critical $U$ value, then the p value is smaller than or equal to 0.05 and therefore, we reject the null hypothesis and assume the alternative hypothesis.
+
+%\begin{figure}[H]
+%	\centering
+%	\includegraphics[trim={2cm 9.5cm 1cm 4.5cm},clip, width = 12cm]{App1_MW_8}
+%	\caption{Critical two-tailed $U$ values in the Mann–Whitney $U$ test at $\alpha=0.05$; where $U$ is the smaller of the two possible values and $n_1$ and $n_2$ are the numbers of participants in the two groups \citep{stats}}\label{figValues}
+%\end{figure}

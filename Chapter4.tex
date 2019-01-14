@@ -1,0 +1,454 @@
+\section{Results and Discussion}
+
+\subsection{Vegetation Cover Classification}
+
+\subsubsection{Model Training}
+
+\justify
+Based on the described methodologies of the random forests algorithm, the random forests algorithm was run for the 26 Landsat 8 SR images with training from the vegetation class polygons. Table \ref{table15} below shows parameters corresponding to the training of the random forests model. These include number of pixels used for training the model, the optimized/error-minimizing $m$ variable, out-of-bag classification accuracy and Kappa coefficient.
+
+\begin{ThreePartTable}
+	\centering
+	\small
+	\def\arraystretch{1.3}
+	\begin{longtable}{L{3.2cm} L{1.8cm} L{2cm} L{2.2cm} L{2.5cm} L{1.7cm}}
+		\caption{Parameters pertaining to the training process of the random forests algorithm}
+		\hskip15pt	
+		\label{table15}\\
+		\toprule[0.25mm]\\[-0.5cm]
+		Landsat Image ID & Training ~~~~~~~Pixels & Number of Trees& Optimized  ~~~~~$m$ variable & Classification ~~~~Accuracy & Kappa ~~~~~~~~~~~~Coefficient \\\\[-0.5cm]
+		\midrule[0.35mm]\\[-0.4cm]
+		LC81470382013108 & 1440 &1000& 2 & 0.831 & 0.775 \\[0.05cm]
+		LC81470382013140 & 1460 &1000& 2 & 0.885 &0.847\\[0.05cm]
+		LC81470382013156 & 1340 &1000& 2 & 0.863 & 0.817\\[0.05cm]
+		LC81470382013268 & 1428 &1000&2&0.860 & 0.813\\[0.05cm]
+		LC81470382013316 & 1320 &1000&2&0.828 &0.770\\[0.05cm]
+		LC81470382013332 & 1324 &1000&2&0.838 &0.784\\[0.05cm]
+		LC81470382014159 & 1388 &1000&2& 0.847&0.795 \\[0.05cm]
+		LC81470382014191 & 1264 &1000&2& 0.846&0.795\\[0.05cm]
+		LC81470382014239 & 1440 &1000&2&0.862 &0.816 \\[0.05cm]
+		LC81470382014303 & 1384 &1000&2& 0.842&0.789\\[0.05cm]
+		LC81470382014319 & 1396 &1000&2&0.838 &0.784 \\[0.05cm]
+		LC81470382014335 & 1356 &1000&2&0.847 &0.795 \\[0.05cm]
+		LC81470382014351 & 1348 &1000&2&0.843 &0.790 \\[0.05cm]
+		LC81470382015018 & 1360 &1000&2&0.847 &0.796 \\[0.05cm]
+		LC81470382015082 & 1348 &1000&2&0.877 &0.836 \\[0.05cm]
+		LC81470382015114 & 1416 &1000&2&0.842 &0.789 \\[0.05cm]
+	    LC81470382015178 & 924 &1000&2& 0.828	&0.770 \\[0.05cm]
+		LC81470382015274 & 1368 &1000&2&0.866 & 0.821\\[0.05cm]
+		LC81470382015290 & 1376 &1000&2&0.848 & 0.797\\[0.05cm]
+		LC81470382015322 & 1336 &1000&2&0.841 & 0.788\\[0.05cm]
+		LC81470382016005 & 1324 &1000&2& 0.858& 0.811\\ [0.05cm]
+		LC81470382016117 & 1444 &1000&2& 0.845& 0.794\\[0.05cm]
+		LC81470382016133 & 1400 &1000&2&0.861 & 0.815\\[0.05cm]
+		LC81470382016293 & 1424 &1000&2&0.848 & 0.797\\[0.05cm]
+		LC81470382016357 & 1344 &1000&2&0.834 & 0.778\\[0.05cm]
+		LC81470382017071 & 724 &1000&2& 0.768&  0.690\\[0.05cm]
+		\bottomrule[0.25mm]
+	\end{longtable}
+\end{ThreePartTable}
+
+\subsubsection{Model Testing}
+
+\justify
+After training, the random forests model was then used to test pre-sampled data in the test dataset in order to get an unbiased second-estimate of accuracy. Parameters pertaining to the testing process are shown below in Table \ref{table16}. These include number of pixels used for testing, classification accuracy, Kappa coefficient and producer's accuracy by class. These values were derived from independent confusion matrices which were custom-developed within the random forests algorithm.
+
+\begin{ThreePartTable}
+	\centering
+	\small
+	\def\arraystretch{1.3}
+	\begin{longtable}{L{3.1cm} L{1.1cm} L{2.2cm} L{1.7cm} L{0.1cm} L{1cm} L{1cm}  L{1cm}  L{1cm}}
+		\caption{Parameters pertaining to testing of random forests model on the designated test dataset}
+		\hskip15pt	
+		\label{table16}\\
+		\toprule[0.25mm]\\[-0.5cm]
+		Landsat Image ID & Test ~~~~~~~~ Pixels & Classification ~~~~Accuracy & Kappa ~~~~~~~~~~~~~~Coefficient & \multicolumn{5}{c}{Producer's Accuracy by Class~~~} \\[-0.05cm]
+		&&&&& 1 & 2 & 3 & 4 \\\\[-0.5cm]
+		\midrule[0.35mm]\\[-0.4cm]
+		LC81470382013108 & 717 & 0.840 & 0.784 && 0.853 & 0.814 & 0.825 & 0.876 \\  
+		LC81470382013140 &721 & 0.879&0.837&&0.847&0.891&0.820&0.949\\[0.05cm]
+		LC81470382013156 &721 &0.879&0.839&&0.851&0.910&0.831&0.921 \\[0.05cm]
+		LC81470382013268 &718 &0.896&0.860&&0.854&0.896&0.891&0.932 \\[0.05cm]
+		LC81470382013316 &718 &0.877&0.836&&0.901&0.883&0.809&0.921\\[0.05cm]
+		LC81470382013332 &720 &0.881&0.840&&0.879&0.862&0.825&0.960\\[0.05cm]
+		LC81470382014159 &721 &0.864&0.818&&0.859&0.858&0.803& 0.938\\[0.05cm]
+		LC81470382014191 &683 &0.876&0.833&&0.879&0.896&0.847&0.881\\[0.05cm]
+		LC81470382014239 &720 &0.871&0.827&&0.868&0.844&0.852&0.927\\[0.05cm]
+		LC81470382014303 &719 &0.851&0.801&&0.878&0.877&0.770&0.881\\[0.05cm]
+		LC81470382014319 &721 &0.864&0.818&&0.932&0.883&0.787&0.864 \\[0.05cm]
+		LC81470382014335 &718 &0.836&0.780&&0.846&0.890&0.743&0.858 \\[0.05cm]
+		LC81470382014351 &715 &0.864&0.818&&0.861&0.887&0.809& 0.898\\[0.05cm]
+		LC81470382015018 &716 &0.891&0.854&&0.863&0.891&0.874&0.932 \\[0.05cm]
+		LC81470382015082 &720 &0.921&0.894&&0.918&0.926&0.912&0.927 \\[0.05cm]
+		LC81470382015114 &721 &0.861&0.814&&0.810&0.826&0.869&0.938 \\[0.05cm]
+		LC81470382015178 &539 &0.800&0.730&&0.820&0.784&0.739&0.876 \\[0.05cm]
+		LC81470382015274 &720 &0.876&0.835&&0.797&0.894&0.891&0.910 \\[0.05cm]
+		LC81470382015290 &719 &0.837&0.783&&0.848&0.784&0.820&0.910 \\[0.05cm]
+		LC81470382015322 &720 &0.854&0.805&&0.913&0.849&0.760&0.904 \\[0.05cm]
+		LC81470382016005 &716 &0.858&0.810&&0.908&0.850&0.790& 0.893\\ [0.05cm]
+		LC81470382016117 &721 &0.867&0.821&&0.933&0.863&0.814& 0.876\\[0.05cm]
+		LC81470382016133 &721 &0.882&0.842&&0.918&0.874&0.852&0.893 \\[0.05cm]
+		LC81470382016293 &721 &0.856&0.807&&0.893&0.864&0.765&0.910 \\[0.05cm]
+		LC81470382016357 &715 &0.869&0.824&&0.867&0.870&0.840&0.898 \\[0.05cm]
+		LC81470382017071 &546 &0.830&0.769&&0.821&0.758&0.793& 0.923 \\[0.05cm]
+		\bottomrule[0.25mm]
+	\end{longtable}
+\end{ThreePartTable}
+
+\subsubsection{Visualization of Predicted Images}
+
+\justify
+The resulting 26 vegetation classification images from the random forests algorithm can be seen below in Figure \ref{fig20}. The visualization was conducted using R version 3.4.3 within the RStudio IDE; with the utility of the CRAN "rasterVis" and "lattice" packages.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[trim={0.2cm 0 0 0},clip, width = 14cm]{results_test}
+	\caption{Visualization of 26 vegetation classification images produced by the random forests algorithm; 1 represents coniferous forests; 2 represents broad-leaved forests; 3 represents cropland, shrubs and grassland; 4 represents non-vegetated areas}
+	\label{fig20}
+\end{figure}
+
+\subsubsection{Variable Importance Index}
+
+\justify
+As mentioned in the description of the random forests algorithm, the algorithm provides an advantageous attribute of determining the relative importances of classification variables. This is done by producing a variable importance index with values ranging from 0-100. Higher values indicate greater importance of a variable to the classification process. Figure \ref{fig21} shows the variable importance indices against the Landsat 8 SR bands; ranging from Band 1 (B1) to Band 7 (B7). As we can see, band 6 shows the greatest importance for class 1, band 5 for class 2, band 6 for class 3, and band 2 for class 4. We can also observe that the most distinct relative importance occurs in Class 4, where bands 2 and 7 dominate in terms of importance. In classes 1 to 3, the relative importances are less distinct and more even between the bands. The visualization was conducted with utility of the CRAN "graphics" and "raster" packages within R-Studio in R version 3.4.3.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[trim={0 0 0 0.8cm},clip, width = 15cm]{boxplot}
+	\caption{Class-wise box-plot visualization of variable importance in the random forests algorithm}
+	\label{fig21}
+\end{figure}
+
+\subsubsection{Summary of Results}
+
+\justify
+With the individual analyses of the previous sections, we can now summarize our findings. Table \ref{table17} summarizes the results obtained from the random forests model. It shows the sample mean and standard deviation for overall classification accuracy, the Kappa coefficient and producer's accuracy by class. The mean classification accuracy and mean kappa coefficient are above 0.80 or 80$\%$. Literature regarding these parameters suggests that values in this range indicate a strong strength of agreement between the classifier and the observed dataset \citep{altman1990}. We can interpret this to mean that the random forests algorithm is an effective tool in classifying vegetation cover in the study area according to the given vegetation classes.
+
+\begin{ThreePartTable}
+	\centering
+	\small
+	\def\arraystretch{1.3}
+	\begin{longtable}{L{2.7cm} L{3cm} L{2.4cm} L{0.3cm} L{1cm} L{1cm}  L{1cm}  L{1cm}}
+		\caption{Summary of results; showing the sample mean (\ovB{$X$}) and standard deviation $(s)$ of classification accuracy, Kappa coefficient and producer's accuracy by class}
+		\hskip15pt \label{table17}\\
+		\toprule[0.25mm]\\[-0.5cm]
+		Parameter & Classification ~~~~~~~~~Accuracy & Kappa ~~~~~~~~~~~~~~Coefficient & \multicolumn{5}{c}{Producer's Accuracy by Class~} \\[-0.05cm]
+		&&&& 1 & 2 & 3 & 4 \\\\[-0.5cm]
+		\midrule[0.35mm]\\[-0.4cm]
+		\ovA{$X$} & 0.855 & 0.806 && 0.870 & 0.863 & 0.820 & 0.907 \\  
+		\large $s$ \rm & 0.0244 & 0.0326 && 0.0369  & 0.0407 & 0.0456 & 0.0270  \\ 
+		\bottomrule[0.25mm]
+	\end{longtable}
+\end{ThreePartTable}
+
+\subsection{Vegetation Cover Loss Analysis}
+
+\subsubsection{Overview of Results}
+
+\justify
+With the 26 vegetation classification images prepared, we then proceeded to analyzing the images and conducting the vegetation cover loss analysis. Figure \ref{fig22} shows the calculated median vegetation classification image across all image groups 2013-2016, in comparison to a Red-Green-Blue (\ac{rgb}) Landsat 8 SR image taken in early 2013. This and the following visualizations have been conducted using ArcMap version 10.3.1. By comparing both images qualitatively, we can see that there are significant similarities and agreements between the images. The green regions symbolizing forests in the RGB image also appear to be forests in the median vegetation classification image. Similarly, the non-vegetated regions in both the RGB and median classification image tend to agree. The median vegetation classification image was then used in later analyses as a background image, as it was considered a satisfactory representation of vegetation cover in the study area.
+
+\justify
+Next, each of the group-pairs were analyzed for significant increases in vegetation class number using the Mann-Whitney $U$ test, as described earlier in the "Data Inventories and Methodologies" section. Group-pairs were analyzed in a consecutive manner in order to flag pixels that could indicate vegetation loss. Figure \ref{fig23} shows the raw flagged pixels for each of the 3 sets of analyses, along with a mosaic/sum of all raw flagged pixels. The flagged pixels are highlighted in red; however, it is important to note that the red color has been intensified for better visibility. The raw flagged pixels contain pixels a mixture of different types of pixels; those that are "lone" and those that occur in groups. From a management perspective, it may not be efficient to track/monitor lone pixels; as there is a possibility that they have been flagged due to chance and/or stochastic variation. As a result, it may be more efficient to track/monitor pixels that occur in groups as there is a higher likelihood that these pixels reflect a significant loss in vegetation.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[trim={5cm 1.5cm 5cm 0.5cm},clip, height = 23cm]{DS_Project_Map_Comparison}
+	\caption[Visualization of Landsat 8 SR Red-Green-Blue (RGB) image against median vegetation classification image across all 2013-2016 image groups]{Visualization of Landsat 8 SR Red-Green-Blue (RGB) image against median vegetation classification image across all 2013-2016 image groups. 1 represents coniferous forests; 2 represents broad-leaved forests; 3 represents cropland, shrubs and grassland; 4 represents non-vegetated areas}
+	\label{fig22}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[trim={2.5cm 6cm 2.5cm 2cm},clip, width = 16cm]{DS_Project_Pixels_Comparison_3}
+	\caption[Visualization of raw flagged pixels for vegetation loss (emphasized red) for the 2013-2014, 2014-2015, 2015-2016 group-pairs and the corresponding sum]{Visualization of raw flagged pixels for vegetation loss (emphasized red) for the 2013-2014, 2014-2015, 2015-2016 group-pairs and the corresponding sum. 1 represents coniferous forests; 2 represents broad-leaved forests; 3 represents cropland, shrubs and grassland; 4 represents non-vegetated areas}
+	\label{fig23}
+\end{figure}
+
+\justify
+In light of this, the flagged raw pixels were clumped according to a 8-directional spatial criterion. Figure \ref{fig24} shows the clump pixels for all 3 group-pairs and the corresponding mosaic/sum of all clump flagged pixels. Comparing Figure \ref{fig23} and Figure \ref{fig24}, we can see a significant reduction in the number of pixels due to the 8-directional spatial clumping. This is due to the removal of a significant number of "lone" pixels. Table \ref{table18} shows the exact number of pixels under each aggregation method. The remaining clump pixels are those that occur in groups and would possibly be of higher priority for an authority monitoring vegetation loss. From a management point of view, it would also make sense to start by analyzing these clump pixels.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[trim={2.5cm 6cm 2.5cm 2cm},clip, width = 16cm]{DS_Project_Pixels_Comparison_4}
+	\caption[Visualization of clump flagged pixels for vegetation loss (emphasized red) for the 2013-2014, 2014-2015, 2015-2016 group-pairs and the corresponding sum]{Visualization of clump flagged pixels for vegetation loss (emphasized red) for the 2013-2014, 2014-2015, 2015-2016 group-pairs and the corresponding sum. 1 represents coniferous forests; 2 represents broad-leaved forests; 3 represents cropland, shrubs and grassland; 4 represents non-vegetated areas}
+	\label{fig24}
+\end{figure}
+
+\justify
+Figure \ref{fig25} shows a comparison of the sum of pixels under the 2 different aggregation methods; namely the raw and clump aggregation methods. We can clearly observe that the latter method displays fewer pixels than the first, as also shown in Table \ref{table18}. This is due to the exclusion of "lone" pixels. We can see that the clump method identifies $\sim40\%$ of the total number of flagged pixels. Overall, the flagged pixels are all valid and deserve to be investigated independently. However, since resources for investigation tend to be limited, it would make more sense from a management perspective to dedicate resources to investigating clump pixels first because there is higher likelihood that a more significant and meaningful vegetation loss could be discovered.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[trim={2.5cm 22cm 2.5cm 2cm},clip, width = 16cm]{DS_Project_Pixels_Comparison_5}
+	\caption[Visualization of sum of flagged pixels for vegetation loss (emphasized red) under raw and clump aggregation methods]{Visualization of sum of flagged pixels for vegetation loss (emphasized red) under raw and clump aggregation methods. 1 represents coniferous forests; 2 represents broad-leaved forests; 3 represents cropland, shrubs and grassland; 4 represents non-vegetated areas}
+	\label{fig25}
+\end{figure}
+
+\begin{ThreePartTable}
+	\centering
+	\small
+	\def\arraystretch{1.3}
+	\begin{longtable}{L{3cm} L{3cm} L{3cm} L{3cm} L{2cm}}
+		\caption{Number of flagged pixels for vegetation loss pertaining to given group-pairs/sums and aggregation methods}
+		\hskip15pt	
+		\label{table18}\\
+		\toprule[0.25mm]\\[-0.5cm]
+		Aggregation Method & Group-Pair ~~~~~~~~~~~~~2013-2014& Group-Pair ~~~~~~~~~~2014-2015& Group-Pair ~~~~~~~~~~~2015-2016& Sum Figure \\\\[-0.5cm]
+		\midrule[0.35mm]\\[-0.4cm]
+		Raw & 3322 & 4806 & 3546 & 11582\\
+		Clump & 1204 &2050& 1438 & 4670\\[0.05cm]
+		\bottomrule[0.25mm]
+	\end{longtable}
+\end{ThreePartTable}
+
+\subsubsection{Positive Verifications}
+
+\justify
+With the various flagged pixels, we then proceeded to verifying the predicted changes with the assistance of sharp satellite imagery in Google Earth Pro. This was done to show the effectiveness of the flagged pixels in identifying vegetation loss. Figures \ref{fig26}, \ref{fig27}, \ref{fig28} and \ref{fig29} show positive verifications of flagged pixels (red boundaries) indicating vegetation loss.
+
+\justify
+As we can see from the aforementioned figures, the flagged pixels accurately predicted real-life losses in vegetation cover. The localities in Figures \ref{fig26}, \ref{fig27} and \ref{fig28} were deliberately selected because of prior anecdotal knowledge from locals about the land-use of the localities. For example, the locality in Figure \ref{fig26} was previously a river bank until 2014 and was later converted into a residential area. Similarly, the locality in Figure \ref{fig27} was previously a grass-covered plateau on a hill-top that was used for recreational purposes until 2014. After 2014, it was converted into a helipad for emergency helicopter landings and is otherwise used as a cricket game ground. 
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[trim={1cm 8cm 1cm 3.5cm},clip, width = 16cm]{DS_Project_Pixels_Comparison_Positive_Verification_2}
+	\caption[Positive verification of flagged pixels (red boundary) for vegetation loss from grassland/shrubs (left) to non-vegetated area (right)]{Positive verification of flagged pixels (red boundary) for vegetation loss from grassland/shrubs (left) to non-vegetated area (right). 1 represents coniferous forests; 2 represents broad-leaved forests; 3 represents cropland, shrubs and grassland; 4 represents non-vegetated areas}
+	\label{fig26}
+\end{figure}
+
+\justify
+Similarly, the locality in Figure \ref{fig28} hosted a hydro-power dam on the east-side of the river and forests on the west-side of the river until 2014. After this, a bridge and roads were made to connect adjacent sides of the river together. Vegetation cover was lost in this development process. It can be observed in Figure \ref{fig29} that the flagged pixels predict some of the vegetation loss in the locality, but not all of it. This is an inherent limitation of our methodology of limiting the search space before conducting the Mann-Whitney $U$ test. If we had enough computational resources to conduct the Mann-Whitney $U$ test for all pixels in the images, then perhaps we might be able to identify more flagged pixels. 
+
+\justify
+Nonetheless, despite this limitation; the flagged pixels still provide a vegetation monitoring authority some idea of vegetation loss and an incentive for further investigation. Perfection in prediction is not necessarily a requirement for the purpose of investigating vegetation loss. Rather, the monitoring technique must provide a significant and credible notion of vegetation loss and its corresponding locality.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[trim={1cm 8cm 1cm 3.5cm},clip, width = 16cm]{DS_Project_Pixels_Comparison_Positive_Verification_3}
+	\caption[Positive verification of flagged pixels (red boundary) for vegetation loss from grassland/shrubs (left) to non-vegetated area (right)]{Positive verification of flagged pixels (red boundary) for vegetation loss from grassland/shrubs (left) to non-vegetated area (right). 1 represents coniferous forests; 2 represents broad-leaved forests; 3 represents cropland, shrubs and grassland; 4 represents non-vegetated areas}
+	\label{fig27}
+\end{figure}
+
+\justify
+Amongst the figures, it can be observed that some predicted pixels of a certain class do not match the evidence on the RGB image. An example would be where a predicted pixel shows a non-vegetated class but the RGB image shows grassland. There can be many reasons for such errors; from lack of classification potential to a mix of various land cover types contributing to differing classification types.
+
+\justify
+In regards to this limitation, we concluded in the random forests model results section that the accuracy of the random forests model was $\sim$80$\%$. As a result, we can expect in every clump cluster of pixels identified, roughly 8 out of 10 flagged pixels should correspond to real-life vegetation classes. Conversely, roughly 2 out of 10 pixels would be falsely classified. In this sense, some misclassification of pixels would be expected in our analysis. Due to this inherent limitation, we are provided with a greater incentive to analyze pixel clumps instead of lone pixels. When we analyze pixel clumps, it allows us to be more sure that at least some of the pixels identified will be meaningful. As with lone pixels, the uncertainty about the meaningfulness of the pixel is higher.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[trim={1cm 8cm 1cm 3.5cm},clip, width = 16cm]{DS_Project_Pixels_Comparison_Positive_Verification_4}
+	\caption[Positive verification of flagged pixels (red boundary) for vegetation loss from forest/grassland/shrubs (left) to non-vegetated area (right)]{Positive verification of flagged pixels (red boundary) for vegetation loss from forest/grassland/shrubs (left) to non-vegetated area (right). 1 represents coniferous forests; 2 represents broad-leaved forests; 3 represents cropland, shrubs and grassland; 4 represents non-vegetated areas}
+	\label{fig28}
+\end{figure}
+
+\justify
+It can be observed in these positive verifications that we only used RGB images from late 2014 till 2016. Similarly, we only verified flagged pixels in the 2015-2016 group pair. This is mainly because Google Earth Pro only offers high-quality images in the study area in the time period from late 2014 till 2016. As a result, we could only verify the flagged pixels for this time period.
+
+\justify
+Naturally in the long-run, we cannot expect high-quality RGB images to always exist for us to verify flagged pixels. As a result, the relevant monitoring authority would need to utilize other means of verifying vegetation loss. One example could be conducting ground truthing to verify the flagged pixels. This could be relatively simple process, however, it would need to be done within a short-time period as potential illegal loggers/miners may shift their location of operation quickly. Another possibility would be to make good connections with locals who live in nearby regions. The locals could help to provide information to the authority. Additionally, if significant funding is available, the monitoring authority could request/purchase high-quality satellite images from satellites services provided by ISRO.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[trim={1cm 8cm 1cm 3.5cm},clip, width = 16cm]{DS_Project_Pixels_Comparison_Positive_Verification_1}
+	\caption[Positive verification of flagged pixels (red boundary) for vegetation loss from forest/shrubs (left) to non-vegetated area (right)]{Positive verification of flagged pixels (red boundary) for vegetation loss from forest/shrubs (left) to non-vegetated area (right). 1 represents coniferous forests; 2 represents broad-leaved forests; 3 represents cropland, shrubs and grassland; 4 represents non-vegetated areas}
+	\label{fig29}
+\end{figure}
+
+\subsubsection{Negative Verifications}
+
+\justify
+Now that we have positively verified flagged pixels that successfully indicate vegetation loss, we must objectively also show the case of negative verifications; that is where flagged pixels falsely indicate vegetation loss. We will also be postulating on certain reasons why this happens.
+
+\justify
+Figures \ref{fig30}, \ref{fig31} and \ref{fig32} show examples of flagged pixels falsely predicting vegetation loss. In Figure \ref{fig30}, the flagged pixels are located in a mountainous area with $\sim$70$\%$ slope. The flagged pixels indicate significant vegetation loss; however the RGB images indicate that vegetation cover remained roughly the same. There are several plausible reasons as to why this occurred. For one, areas with high slopes result in pixels being influenced by more land features compared to flat regions. As a result, the pixels could be affected by more variable factors. Additionally, the accuracy of the Landsat 8 SR topographical correction algorithm could be lower in regions with higher slopes and low solar illumination \citep{landsat2016}. This could also result in variations in classifications of higher slope regions.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[trim={1cm 8cm 1cm 3.5cm},clip, width = 16cm]{DS_Project_Pixels_Comparison_Negative_Verification_2}
+	\caption[Negative verification of flagged pixels (red boundary) for vegetation loss at $\sim$70$\%$ slope; black line (top) indicates the study area boundary and white pixels (top) indicate NA values]{Negative verification of flagged pixels (red boundary) for vegetation loss at $\sim$70$\%$ slope; black line (top) indicates the study area boundary and white pixels (top) indicate NA values. 1 represents coniferous forests; 2 represents broad-leaved forests; 3 represents cropland, shrubs and grassland; 4 represents non-vegetated areas}
+	\label{fig30}
+\end{figure}
+
+\justify
+As a result of this, we can conclude that we should rely less on conclusions from flagged pixels with high slopes; which can be generally defined as slopes above or equal to $70\%$. This would also help to reduce false predictions. Next, we consider the case in Figure \ref{fig31}. Here, the flagged pixels indicate a significant loss in vegetation in an area that appears to be cropland on the RGB image. By comparing the two RGB images, we can see that there is no actual loss in vegetation as the area still remains cropland. This error could have occurred due to the cropland not being as productive as it was in the previous time period, or that the cropland was not as productive compared to other croplands on which the random forests model was trained. As a result, this cropland appeared to have registered an increase in the vegetation class number. 
+
+\justify
+Another possible reason could be due to the presence of non-evergreen trees distributed around the croplands. These trees could have been on average more vegetated in 2015 than in 2016; which could have registered as a significant loss in vegetation. We can conclude that flagged pixels may not be reliable on croplands due to agricultural and seasonal variations.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[trim={1cm 8cm 1cm 3.5cm},clip, width = 16cm]{DS_Project_Pixels_Comparison_Negative_Verification_3}
+	\caption[Negative verification of flagged pixels (red boundary) for vegetation loss in croplands]{Negative verification of flagged pixels (red boundary) for vegetation loss in croplands. 1 represents coniferous forests; 2 represents broad-leaved forests; 3 represents cropland, shrubs and grassland; 4 represents non-vegetated areas}
+	\label{fig31}
+\end{figure}
+
+\justify
+Finally, we consider the case in Figure \ref{fig32}. Here, flagged pixels indicate a significant loss in vegetation in a river bank area. However, when comparing the RGB images; we can see that the vegetation cover remains roughly similar and there appears to be little evidence of human-related destruction of vegetation. We can see that there is a greater exposure of the riverine rocks, which could be a result of seasonal variations in surface runoff and flooding activities. As a result, we can conclude that flagged pixels on river bank areas may not be reliable indicators of significant vegetation loss.
+
+\justify
+With the aforementioned analyses, we can conclude that the flagged pixels are generally effective in identifying actual vegetation cover loss. However, the monitoring authority should make a special effort to avoid making decisive conclusions from croplands, river banks and regions with high slopes. Flagged pixels in areas other than these tend to show higher reliability. Once again, no monitoring method can be perfect. It is important to identify the strengths and limitations of a method; so that the relevant authority can utilize the strengths and mitigate the limitations. This would lead to a more effective vegetation monitoring strategy.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[trim={1cm 8cm 1cm 3.5cm},clip, width = 16cm]{DS_Project_Pixels_Comparison_Negative_Verification_4}
+	\caption[Negative verification of flagged pixels (red boundary) for vegetation loss in river banks]{Negative verification of flagged pixels (red boundary) for vegetation loss in river banks. 1 represents coniferous forests; 2 represents broad-leaved forests; 3 represents cropland, shrubs and grassland; 4 represents non-vegetated areas}
+	\label{fig32}
+\end{figure}
+
+\subsubsection{Summary of Results}
+
+\justify
+To summarize, we can observe that flagging pixels using the Mann-Whitney $U$ test is an effective method to identify regions experiencing vegetation loss. We discussed methods of filtering pixels in order to identify the most important sets of pixels to investigate and recommended the clump aggregation method; as it identifies clumps of flagged pixels which are likely to show meaningful vegetation loss compared to lone pixels. These clump pixels would be recommended as a first priority for a monitoring authority to investigate. Next, we verified some flagged pixels in order to check their reliability. We concluded that the flagged pixels tend to be reliable in non-cropland areas, non-riverbank areas and areas with low or moderate slopes; generally below $\sim$70$\%$. We also concluded that no flagging process is perfect; including the one recommended in this study. The crux of the flagging process is to provide sufficient evidence and incentive for a monitoring authority to investigate further. We recommended further techniques of investigation, such as ground truthing, consulting local people and utilizing high resolution satellite imagery.
+
+\subsection{Overall Vegetation Cover Analysis}
+
+\subsubsection{Temporal Trend}
+
+\justify
+With the analysis of the individual flagged pixels, we now progress to a broader analysis of the vegetation cover trend from 2013-2017. For this analysis, we firstly considered all 26 images. From these 26 images, we selected 18 images which possessed 80$\%$ or more of total pixels of the study area under 3,000 m altitude. With these 18 images, we extracted the proportion of pixels under class 1 and 2 (forests; coniferous and broad-leaved), class 3 (croplands/grasslands/shrubs) and class 4 (non-vegetated areas). We plotted these points in Figure \ref{fig33} to analyze their respective trends. The plotting of results was conducted using the CRAN "lattice", "latticeExtra" and "chron" packages using R version 3.4.3 under the RStudio IDE. The proportion of pixels were plotted against the elapsed Julian days since 01-01-2013. 
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[trim={0 0.2cm 0 0.5cm},clip, width = 16cm]{trendplot}
+	\caption{Overall vegetation cover trend for class 1,2 (left; green), class 4 (left; purple) and class 3 (right; brown); temporal x-axis represented in Julian days with origin of 01-01-2013}
+	\label{fig33}
+\end{figure}
+
+\justify
+Based on the plot in Figure \ref{fig33}, we can observe some degree of seasonality with peaks and troughs for the respective classes. As for a general trend, we can observe that the proportion of pixels covered by forests (class 1,2) and non-vegetated area (class 4) shows a weak negative temporal trend while the proportion of pixels covered by croplands, shrubs and grasslands (class 3) shows a weak positive temporal trend. The exact values for the sample Pearson Correlation Coefficient and best-fit line gradient can be found below in Table \ref{table19}. From this, we can infer that the total forest area in the study area is gradually decreasing and is plausibly being replaced predominantly by croplands, grasslands and shrubs. This could be due to several factors, such as deforestation in order to create more land area for agriculture. This could also be a result of illegal logging and mining that was discussed in the initial section of this study.
+
+\begin{ThreePartTable}
+	\centering
+	\small
+	\def\arraystretch{1.3}
+	\begin{longtable}{L{2cm} L{2cm} L{3.5cm} L{3.8cm} L{2.8cm}}
+		\caption{Temporal trend analysis of classes based on corresponding sample Pearson Correlation Coefficient ($r$) and best-fit line gradient}
+		\hskip25pt	
+		\label{table19}\\
+		\toprule[0.25mm]\\[-0.5cm]
+		Dataset & Sample Size ~~~~~~~~($n$) &Pearson Correlation ~~~~~~~~~~~~~~~~~~~~Coefficient ($r$)& Best-Fit Line Gradient ~~~~~~~~(per 100 Julian days) & Interpreted Trend \\\\[-0.5cm]
+		\midrule[0.35mm]\\[-0.4cm]
+		Class 1,2 & 18 & -0.252& -2.66$\times 10^{-3}$ & Weak negative\\
+		Class 3 & 18& 0.299 & 3.27$\times 10^{-3}$  & Weak positive\\
+		Class 4 & 18 & -0.0940& -6.04$\times 10^{-4}$ & Weak negative\\[0.05cm]
+		\bottomrule[0.25mm]
+	\end{longtable}
+\end{ThreePartTable}
+
+\subsubsection{Forest Cover Estimate}
+
+\justify
+Now that we have identified the trends in vegetation cover from 2013-2017, it would also be useful for us to provide an estimate of the forest cover in the study area. Ideally, we would like to provide an estimate of total vegetated area without agricultural areas. However, due to class 3 being a combination of agricultural and non-agricultural classes, we are unable to provide such a figure. As a result, we can only provide a meaningful estimate for forest cover, which can be used in later purposes to compare with the data from the state forest department.
+
+\justify
+In order to calculate this statistic, we essentially used the median images of the 2013, 2014, 2015 and 2016 groups and the median image across all groups. This provided us with an estimate of forest cover in the duration of 2013-2017. These results are summarized in Table \ref{table20} below. The first row shows the proportion of pixels occupied by forests in the study area below 3,000 m altitude. The second and third row show the upper and lower bound geographical area occupied by forests in km$^2$ in the study area respectively. To calculate the upper bound figure, we assumed that the proportion of forests recorded in the first row applies equally across the entire geographical area of the study area ($\sim$355 km$^2$). To calculate the lower-bound figure, we assumed that the proportion of pixels recorded in the first row applies equally to regions below 3,000 m in altitude ($\sim$317 km$^2$) and that regions above 3,000 m altitude have negligible forest cover. The true forest cover in the study area is likely to be in between these figures, plausibly closer to the lower bound figure since the forest cover proportion tends to significantly decrease above 3,000 m altitude. For the case of forest cover from 2013-2017, the central estimate is likely to be between 160 km$^2$ and 179 km$^2$, plausibly closer to the lower bound.
+
+\begin{ThreePartTable}
+	\centering
+	\small
+	\def\arraystretch{1.3}
+	\begin{longtable}{L{1.9cm} L{2.3cm} L{2.3cm} L{2.3cm} L{2.3cm} L{2.4cm}}
+		\caption{Study area forest cover estimates from the 2013, 2014, 2015 and 2016 group median images and the median image across all groups}
+		\hskip25pt	
+		\label{table20}\\
+		\toprule[0.25mm]\\[-0.5cm]
+		Parameter & Median 2013 Group & Median 2014 Group&  Median 2015 Group &  Median 2016 Group &  Overall Median \\\\[-0.5cm]
+		\midrule[0.35mm]\\[-0.4cm]
+		Proportion & 0.561 & 0.521& 0.506 & 0.502 & 0.505\\[0.3cm]
+		Area (km$^2$) Upper Bound & 200 & 185 & 180 & 179 & 179 \\\\[-0.4cm]
+		Area (km$^2$) Lower Bound & 178 & 165 & 161  & 159 & 160\\[0.05cm]
+		\bottomrule[0.25mm]
+	\end{longtable}
+\end{ThreePartTable}
+
+\subsection{Resource Utilization}
+
+\subsubsection{Field Data Acquisition}
+
+\justify
+As per the initial objectives of this study, we also need to indicate the amount and intensity of resources utilized in order to make the suggested vegetation monitoring technique possible. This is to show that our strategy is feasible on small-scale with a possibly low budget. Table \ref{table21} below shows a summary of temporal and material resources required to conduct the field data acquisition. The working-time includes verifying recorded points after field data-collection and the drawing of vegetation class polygons.
+
+\begin{ThreePartTable}
+	\centering
+	\small
+	\def\arraystretch{1.3}
+	\begin{longtable}{L{2.8cm} L{3cm} p{9cm}}
+		\caption{Resource utilization for field data acquisition}
+		\hskip25pt	
+		\label{table21}\\
+		\toprule[0.25mm]\\[-0.5cm]
+		Work Period & Working-Time ~~~~~~~Required & Material Resources Required\\\\[-0.5cm]
+		\midrule[0.35mm]\\[-0.4cm]
+		March 2017 & 40 hours; 4 days of 10 hours full working-time per day & 4-wheel vehicle for transport in mountainous terrain, handheld GPS device for recording points, map for georeferencing locations, vegetation manual to help identify different vegetation types, food, water\\[0.05cm]
+		\bottomrule[0.25mm]
+	\end{longtable}
+\end{ThreePartTable}
+
+\subsubsection{Computational Tasks}
+
+\justify
+Table \ref{table22} shows a summary of resources required to complete the computational tasks of our vegetation monitoring strategy. In this table, we provide an approximate measure of computational time (in hours) required to complete corresponding tasks. The computational tasks were conducted on a laptop with dual-boot 64-bit Windows 7 and Ubuntu 16.04 LTS Operating Systems (\ac{os}), 12.0 GB Random-Access Memory (\ac{ram}) and Intel-Core i5-3210M 2.50 GHz $\times$ 4 Central Processing Unit (\ac{cpu}). The laptop used is a common household-use laptop and is not particularly specialized for conducting efficient computations. As a result, these temporal resource requirements could represent upper-bounds; especially for a government authority which might have more powerful computers to conduct such analyses.
+
+\begin{ThreePartTable}
+	\centering
+	\small
+	\def\arraystretch{1.3}
+	\begin{longtable}{L{3cm} L{3cm} L{3cm} L{4cm} L{1cm}}
+		\caption{Temporal resource utilization for computational tasks}
+		\hskip25pt	
+		\label{table22}\\
+		\toprule[0.25mm]\\[-0.5cm]
+		Time Measure & Pre-Processing Remote Sensing Data & Vegetation Cover Classification & Vegetation Cover Loss Analysis & Sum \\\\[-0.5cm]
+		\midrule[0.35mm]\\[-0.4cm]
+		Hours & $\sim$1 & $\sim$2 & $\sim$4 & $\sim$7\\[0.05cm]
+		\bottomrule[0.25mm]
+	\end{longtable}
+\end{ThreePartTable}
+
+
+
+% Old plots:
+
+%\begin{figure}[H]
+%	\centering
+%	\includegraphics[trim={0 0 0 0.8cm},clip, width = 15cm]{vioplot}
+%	\caption{Visualization of variable importance for random forest classification algorithm}
+%	\label{fig22}
+%\end{figure}
+
+%\begin{figure}[H]
+%	\centering
+%	\includegraphics[trim={5cm 1.5cm 5cm 0.5cm},clip, height = 23cm]{DS_Project_2_Clump_Pixels_Comparison}
+%	\caption{Visualization of pixels flagged for vegetation loss (red) for the time period 2013-2017 under the "Sum Clump" and "Sum Then Clump" methodologies}
+%	\label{fig23}
+%\end{figure}
+
+%\begin{ThreePartTable}
+%	\centering
+%	\small
+%	\def\arraystretch{1.3}
+%	\begin{longtable}{L{2.3cm} L{1.7cm} L{1.7cm} L{1.2cm} L{1.2cm} L{0.3cm} L{0.5cm}  L{0.5cm}  L{0.5cm}  L{0.5cm}  L{0.5cm}  L{0.5cm}  L{0.5cm}  L{0.5cm}}
+%		\caption{Summary of results; showing range of total pixels used for training and testing the model, mean classification accuracy, mean Kappa coefficient and mean producer's accuracy by class}
+%		\hskip15pt	
+%		\label{table17}\\
+%		\toprule[0.25mm]\\[-0.5cm]
+%		Range of ~~~~Total Pixels & \multicolumn{2}{L{3.4cm}}{Mean Classification Accuracy}  & \multicolumn{2}{L{2.4cm}}{Mean Kappa Coefficient}  & \multicolumn{5}{c}{Mean Producer's Accuracy by Class~} \\[-0.05cm]
+%		&&&&&& \multicolumn{2}{c}{1} & \multicolumn{2}{c}{2} & \multicolumn{2}{c}{3} & \multicolumn{2}{c}{4} \\\\[-0.5cm]
+%		\midrule[0.35mm]\\[-0.4cm]
+%%		1270 - 2181 & 0.855 & 0.806 && 0.870 & 0.863 & 0.820 & 0.907 
+%\\  
+%		\bottomrule[0.25mm]
+%	\end{longtable}
+%\end{ThreePartTable}
+
+%\begin{figure}[H]
+%	\centering
+%	\includegraphics[trim={1cm 8cm 1cm 3.5cm},clip, width = 16cm]{DS_Project_Pixels_Comparison_Negative_Verification_}
+%	\caption{Negative verification of flagged pixels (red boundary) for vegetation loss at $\sim$50$\%$ slope}
+%	\label{fig30}
+%\end{figure}
+
+%\justify
+%The sum clump aggregation method has an advantage of considering pixels that are spatially adjacent to one another. However, there is an inherent disadvantage in this method; in that spatially "lone" pixels which may be temporally adjacent to one another are ignored. Ideally, we would also like to identify pixels which are not only spatially adjacent, but also temporally adjacent to one another. To do this, we introduce a new aggregation method called "sum then clump". Under this method, the raw pixels are aggregated first to form a mosaic. After this, the resulting pixels are clumped in order to not only identify spatially adjacent pixels; but also pixels which are temporally adjacent.

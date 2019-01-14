@@ -1,0 +1,314 @@
+\section{Introduction}
+
+\justify
+In the last 300 years, the world has seen a significant transition in land-use activities. Large areas of natural forests have been replaced by croplands, pastures and urban areas in order to provide essential resources to human beings; such as food, water, timber and energy. This significant change in land-use activities has led to a net loss of $\sim$7-11 million km$^2$ of forest area worldwide \citep{foley2005}. 
+
+\justify
+This global transition of land-use activities has led to a myriad of environmental problems. These include deforestation, increased carbon dioxide emissions and reduced water quality \citep{foley2005}. A similar transition of land-use activities has affected the northern Indian state of Himachal Pradesh in the northwestern Himalayas region. 
+
+\justify
+Himachal Pradesh is known in India as an ecologically rich region, with healthy and abundant sub-tropical and temperate ecosystems \citepalias{HPB2008}. In fact, out of the total $\sim$47,000 floral species found in the country, 3,295 species ($\sim$7\%) are reported to have originated from the state of Himachal Pradesh \citepalias{HPB2008}. For these reasons, there exist large governmental efforts to mitigate such land-use transitions and to retain natural forests in the state. A key party responsible for such actions is the Himachal Pradesh Forest Department (\href{http://www.hpforest.nic.in/}{\ac{hp}}).
+
+\subsection{Problem Statement}
+
+\justify
+The study area, Dharamshala Tehsil region, is located in the Indian state of Himachal Pradesh. Within the last decade, there has been an emergence of significant illegal logging and mining in the study area; as implied by various anecdotal sources \citepalias{Parvaiz2016, SOER2009}. However, there is a lack of publicly accessible vegetation cover data for us to verify or quantify this anecdotal evidence. Furthermore, there is also a lack of publicly accessible and relevant auxiliary data offered by Indian-based organizations, and spatially and/or temporally relevant auxiliary data offered by external organizations. As a result, it is not possible for us to conduct an independent analysis of vegetation cover in the study area.
+
+\subsection{Objective of Study}
+
+\justify
+Following the rationale of the problem statement, there arises a need to develop an alternative means of monitoring vegetation that is publicly accessible and spatially and temporally sensitive/relevant for the study area. 
+
+\justify
+The objective of this study is therefore to propose an alternative vegetation monitoring strategy in the study area. The proposed strategy will utilize and produce data that is publicly accessible and spatially and temporally sensitive enough to analyze vegetation cover in the study area. The proposed vegetation monitoring strategy should allow for effective spatio-temporal analysis of vegetation cover in the study area.
+
+\justify
+The end goal of this study is to identify, on an annual basis, vegetated sub-regions in the study area that have undergone significant destruction from 2013-2017. With the help of these identifications, HPFD or other forest organizations could verify their own vegetation cover data and more efficiently allocate resources into the investigating the areas which are experiencing loss of vegetation.
+
+\justify
+Besides the core objective, the proposed vegetation monitoring strategy should have the following advantageous properties:
+\begin{itemize}
+	\item [1.] Efficient and cost-effective in monitoring vegetation in the study area
+	\item [2.] Utilize open-source remote-sensing data and software. Well-tested machine-learning algorithms should be utilized in tasks involving classification
+	\item [3.] Potential for reproducibility and automation; in order to reduce costs pertaining to repetitive tasks
+	\item [4.] Potential for utilization in areas other than the study area; possibly with different climates and vegetation types
+\end{itemize}
+
+\subsection{Overview of Methodologies}
+
+\justify
+In order to realize the objective of this study, we implemented the following set of methodologies:
+\begin{itemize}
+	\item [\textbf{1.}] \textbf{Pre-Processing Remote Sensing Data:} Remote-sensing data was queried from 2013-2017 to find the most spectrally, spatially and temporally suited data for the study area. This was identified to be Landsat 8 surface reflectance data.
+	\item [\textbf{2.}] \textbf{Field Data Acquisition:} Field data was collected for 7 different vegetation classes in the study area. These were coniferous forests, broad-leaved forests, mixed forests, cropland, shrubs, grassland, and non-vegetated areas.
+	\item [\textbf{3.}] \textbf{Vegetation Cover Classification:} Various supervised and unsupervised classification algorithms were surveyed. The random forests algorithm was chosen as the most suitable supervised classifier. Vegetation classes were compacted into 4 classes; namely coniferous forests, broad-leaved forests, a combined class of cropland, shrubs and grassland, and non-vegetated areas. 
+	\item [\textbf{4.}] \textbf{Vegetation Cover Loss Analysis:} Vegetation cover classification images were grouped and analyzed using a raster time-series framework. The Mann-Whitney $U$ test was applied to raster time series in order to identify pixels that reflected significant vegetation loss.
+\end{itemize}
+
+\subsection{Thesis Structure}
+
+\justify
+This thesis report is structured in the following manner:
+
+\begin{itemize}
+	\item \textbf{Chapter 1:} Summarizing problem statement, objectives and methodologies of this study.
+	\item \textbf{Chapter 2:} Detailing characteristics of the study area, its corresponding vegetation data inventories and their corresponding limitations
+	\item \textbf{Chapter 3:} Literature review to provide theoretical background of this study
+	\item \textbf{Chapter 4:} Detailing various methodologies and data inventories used in this study
+	\item \textbf{Chapter 5:} Summarizing and discussing the overall results of this study
+	\item \textbf{Chapter 6 and 7:} Conclusions for study and recommendations for future research
+\end{itemize}
+
+\clearpage
+
+\section{Study Area}
+
+\justify
+The study area, Dharamshala Tehsil, is located in the north Indian administrative state of Himachal Pradesh; specifically in the region of the Northwestern Himalayas. The name "Himachal Pradesh" in Sanskrit literally means the "Abode of Snow", which quite accurately depicts the physiography of the state's mountainous landscape. The state is located between $30^\circ 22' - 33^\circ 12'$N and $75^\circ 47' - 79^\circ04'$E and spans 55,673 km$^2$ in geographical land area; which represents $\sim$1.7$\%$ of the country's geographical land area and 10.5$\%$ of the overall Himalayan landmass \citepalias{HPB2008}. Himachal Pradesh ranges in altitudes from 350 m to 6800 m above mean sea level (\ac{amsl}) \citepalias{SOER2009}. Himachal Pradesh shares an international boundary with China to the east, and borders the Indian states of Jammu and Kashmir to the north, Uttrakhand to the southeast, Haryana to the south and Punjab to the west \citep{Kumar2014}.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[trim={7cm 2.3cm 1.2cm 14.8cm},clip, width = 13cm]{HPMap}
+	\caption{Map of districts and agro-climatic zones of Himachal Pradesh \citep{Kumar2014}} \label{Fig0}
+\end{figure}
+\vspace{-12pt}
+
+\justify
+Himachal Pradesh is home to a rich variety of terrestrial and riverine ecosystems. Out of the total $\sim$47,000 floral species found in the country, 3,295 species ($\sim$7\%) are reported to have originated from the state of Himachal Pradesh \citepalias{HPB2008}. This figure is further highlighted given that the state of Himachal Pradesh covers only 1.7\% of the total geographical area of the country \citepalias{HPB2008}. Himachal Pradesh has a total forest and tree cover of 14,894 km$^2$, which accounts for roughly 26.7$\%$ of the state's geographical area \citepalias{SOER2009}. 
+
+\justify
+Based on altitude, rainfall, temperature, humidity and topography, Himachal Pradesh can be broadly divided into 4 agro-climatic zones; from Zone I to Zone IV \citep{Kumar2014}. Zone I represents mainly tropical and sub-tropical regions, Zone II represents sub-tropical to sub-temperate regions, Zone III represents sub-temperate regions and Zone IV represents dry temperate regions and cold deserts of the Trans-Himalaya \citep{Kumar2014}.
+
+\justify 
+The state of Himachal Pradesh is divided into 12 administrative districts; namely Bilaspur, Chamba, Hamirpur, Kangra, Kinnaur, Kullu, Lahaul-Spiti, Mandi, Shimla, Sirmaur, Solan and Una \citepalias{SOER2009}. Districts and agro-climatic zones of Himachal Pradesh can be visualized in Figure \ref{Fig0}. Each administrative district can be further divided into administrative sub-regions, where each administrative sub-region is known as a "Tehsil" \citepalias{SOER2009}. Himachal Pradesh has a total of 75 Tehsils \citepalias{SOER2009}.
+
+\subsection{Geography and Climate}
+
+\justify
+The study area, Dharamshala Tehsil, is located in the Kangra district of the state of Himachal Pradesh (Figure \ref{Fig1}). The study area lies at the foot of the Dhauladhar Mountain Range and is located between $32^\circ 08'-32^\circ 22'$N and $76^\circ13' - 76^\circ27'$E. The study area, being a ''Tehsil'', is an administrative subunit of the larger Kangra district. The Kangra district is bounded in the north by the districts of Chamba and Lahaul and Spiti, in the east by Mandi, in the south by Hamirpur and Una, and in the west by the state of Punjab \citepalias{HDR2009}.
+
+\begin{figure}[H]
+\includegraphics[trim={1.2cm 1.2cm 1.2cm 1.2cm},clip, width = 12cm]{DS_Project_Kangra_Map_2}
+\centering
+\caption{Dharamshala Tehsil (shaded, center) within the Kangra district; Himachal Pradesh (shaded, bottom-left) in India}\label{Fig1}
+\end{figure}
+\vspace{-12pt}
+
+\justify
+The study area has a combined geographical area of 355 km$^2$ with altitudes ranging from 650 m to 4600 m a.m.s.l. The study area and the larger Kangra district have an overall K{\"o}ppen climate classification of Cwa, referring to a humid sub-tropical monsoon-influenced climate \citepalias{HP2012}. The study area experiences 4 seasons; specifically a mild and dry winter, hot pre-monsoon or summer, south-west monsoon and post-monsoon \citepalias{HP2012, CPI2010}. Local climate within the study area varies spatially depending on elevation. For example, local climates are sub-tropical in low hills and valleys, sub-temperate in mid-hills and temperate in high-hills \citepalias{HDR2009}. Figure \ref{Fig2} shows a climatograph with mean temperature and mean precipitation in Dharamshala city based on climate data from 1951-1998.
+
+\begin{figure}[H]
+	\includegraphics[trim={0cm 0.5cm 0cm 0.5cm},clip,width = 13cm]{klimoplot}
+	\centering
+	\caption{Dharamshala city climate-graph with monthly mean temperature (red) in $^\circ$C and precipitation (blue) in mm; blue dashed and solid fill regions refer to the scales 1:20 and 1:200 for precipitation respectively; temperature and precipitation data retrieved from \citetalias{IMD2000}} \label{Fig2}
+\end{figure}
+\vspace{-12pt}
+
+\subsection{Ecology and Geology}
+
+\justify
+Forests in the study area are of particular importance because of the numerous tangible and intangible ecological services they provide. Some examples of ecological services include silt retention in runoff, provision of clean drinking water and timber \citepalias{HP2013}. Forests in the study area can be classified into dry alpine forest, moist alpine scrub forest, sub-alpine forest, Himalayan moist temperate forest, sub-tropical pine forest and sub-tropical broad-leaved hill forest (Table \ref{table5}) \citep{Kumar2015}. Some common plant species found in the region include \textit{Pinus roxburghii, Cedrus deodara and Betula utilis} \citepalias{HDR2009}. Many of these species have local folk names such as \textit{chil, kail, kharsu} and \textit{ban} \citepalias{HDR2009}.
+
+\justify
+The classification of forest and vegetation types will be of key importance to this study and will be analyzed in further detail under "Literature Review". The larger Kangra district has four forest divisions; specifically Dharamshala, Dehra, Nurpur and Palampur. All four forest divisions have a sum of protected forest area (Table \ref{table2}) which is under legal protection against human-induced deforestation \citepalias{HDR2009}.
+
+\justify
+The study area and the larger Kangra district contain a variety of rock types such as shale, clay and sandstones of the Shiwalik group, green shales and fossil rich limestones of the Subathu formation, gneissic and granitic rocks of the Dhauladhar group, phyllites, schists and limestones of the Salooni formation, quartzite, phyllite and limestone of the Manjir formation and older rocks comprising slate, schist, quartzite, basic lava flows, salt, marl and dolomite belonging to the Jutogh,
+Sundernagar and Shali formations \citepalias{HDR2009}. Slates have been extensively mined in the study area because of high demand resulting from its utility as a roofing material \citepalias{HDR2009}. As a result, slate mining has been a thriving industry in the Kangra district since the 1880s \citepalias{HDR2009}. Slate mining is generally a destructive activity as it involves the removal of forests in order to access bare slate. In the last two decades, the government took over mineral rights from the local village-level governments, in an effort to conduct mining in a more sustainable manner \citepalias{HDR2009}. This has resulted in a reduction in mining intensity in recent years \citepalias{HDR2009}.\vspace{5pt}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width = 7.5cm]{Pine}
+	\includegraphics[width = 7.5cm]{Ban} \\ [3pt]
+	\includegraphics[width = 7.5cm]{Tea}
+	\includegraphics[width = 7.5cm]{Rhodedendron}
+	\centering
+	\caption{Sub-tropical pine forest (top-left), Himalayan moist temperate forest (top-right), tea plantation (bottom-left) and mixed alpine forest (bottom-right)}\label{Fig3}
+\end{figure}
+\vspace{-12pt}
+
+\subsection{Demographics and Tourism}
+
+\justify
+As per a 2011 census, the Kangra district has a population of 1,510,075 individuals, which constitutes the highest district-wise population in the state of Himachal Pradesh \citepalias{DCH2011}. Agriculture plays a central role in the economy of the district, producing roughly 25$\%$ of the overall food-grain production in the state of Himachal Pradesh \citepalias{HDR2009}. Key crops grown in the district are rice, maize, wheat, barley, pulses and tea \citepalias{HDR2009}.
+
+\justify
+Both the study area and the larger Kangra district are home to indigenous agro-pastoral tribes such as the "Gaddi" and "Gujjar" people (Figure \ref{Fig4}) \citepalias{Singh2012, HDR2009}. Members of these tribes climb to high hills and mountains during summer to find green pastures for the grazing of their livestock \citepalias{HDR2009}. During winter, they descend back down to the plains and valleys \citepalias{HDR2009}. The livelihoods of these tribes are strongly interlinked with the existence of forested and vegetated areas in the region. 
+
+\justify
+The study area is home to approximately 20,000 Tibetan migrants, who fled the Chinese invasion of Tibet to seek refuge in India (Figure \ref{Fig4}) \citep{Frilund2014}. Dharamshala is considered to be the capital of the exiled Tibetan community, because the Central Tibetan Administration (\ac{cta}) and other key affiliated organizations have their headquarters located in the region \citep{Frilund2014}. 
+
+\justify
+Because of the rich natural and cultural heritage of the region, the study area and the larger Kangra district attract many domestic and foreign tourists all year around. In the period from 2011-12, it was recorded that $\sim$1,500,000 domestic and foreign tourists visited the Kangra district \citepalias{HPT2013}. Tourism forms a key component of the local economy. High tourist activity is reported to be one of the factors for unsustainable development in the region \citepalias{SOER2009}.\vspace{5pt}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[trim={3cm 0 0 0},clip, width = 7.53cm]{Gaddi}
+	\includegraphics[width = 7cm]{Tibetan}
+	\caption{Gaddi shepherd (left)  and Tibetan community (right) \citep{Singh2012, Frilund2014}}\label{Fig4}
+\end{figure}
+\vspace{-12pt}
+
+\subsection{Forest Cover}
+
+\justify
+Forests in the study area and the larger Kangra district provide a rich variety of ecosystem services and are fundamental to the economy and livelihood of the region. Many aromatic and medicinal plants thrive in these forests and are used widely by the local people \citepalias{DCH2011}. Forests in the study area are under threat due to human-induced pressures; such as high population growth, increasing urbanization and an expanding tourism industry. For this reason, many forests have been designated as reserved and protected areas by the Himachal Pradesh Forest Department. Table \ref{table2} summarizes legally classified forest areas in Kangra district for the years of 2002-03, 2007-08 and 2008-09. 
+
+\justify
+An important distinction must be made between forest area and forest cover; as per the State of Environment Report (\citeyear{SOER2009}) from the Department of Environment, Science and Technology (\ac{de}) (pp. 217):
+
+\justify
+\textit{"Forest cover refers to all lands with a tree canopy of more than ten per cent and may not be recorded as forest and should be distinguished from forest area which refers to all land recorded as forest and may not necessarily bear forest/tree cover."}
+
+\justify
+Essentially, this distinction would mean that a certain amount of landmass can be classified as a forest area, but does not necessarily have to bear any forest. This would mean that the actual forest cover is, with a high probability, less than or equal to the forest area. This distinction is particularly salient for the entire state of Himachal Pradesh, where the total forest area is 37,033 km$^2$ and the total forest cover is 14,894 km$^2$ \citepalias{SOER2009}. This would mean that for the entire state of Himachal Pradesh, only $\sim$40$\%$ of legally classified forest area contains forest cover. There are nonetheless mitigating factors for this discrepancy; such as significant portions of forest areas being located in altitudes above 4000 m a.m.s.l., which cannot support forest cover \citepalias{SOER2009}.
+
+\justify
+This statistic is not as skewed for the Kangra district, where there is 2,842 km$^2$ of legally classified forest area and an actual forest cover of 2,068 km$^2$, based on a 2015 forest cover assessment \citepalias{HP2015}. This discrepancy could be due to the presence high altitude areas above 4,000 m a.m.s.l. However, areas above 4,000 m altitude in Kangra district only account for $\sim$550 km$^2$, which at best would still leave $\sim$250 km$^2$ of forest area without forest cover. Naturally, one would question why this designated forest area in the study area and Kangra district does not have forest cover.
+
+\begin{table}[H]
+	\small
+	\def\arraystretch{1.3}
+	\begin{threeparttable}
+		\centering
+		\caption{Geographical area (km$^2$) of forest areas in Kangra district \citepalias{HDR2009, DCH2011}}
+		\label{table2}
+		\begin{tabular}{L{1.35cm} L{1.8cm} L{3cm} L{2.5cm} L{2.1cm} L{1.4cm} L{0.9cm}}
+			\toprule[0.25mm]
+			Year & Reserved Forest &Demarcated $~$Protected Forest&Un-demarcated Forest & Unclassified Forest & Other Forest & Total\\
+			\midrule[0.35mm]
+			2002-03   & 76    & 558 &   1,636 & 516& 56& 2,842\\
+			2007-08   & 76    & 558 &   1,647 & 505& 56& 2,842\\
+			2008-09   & 76    & 558 &   1,647 & 505& 56& 2,842\\
+			\bottomrule[0.25mm]
+		\end{tabular}
+	\end{threeparttable}
+\end{table}
+
+\justify
+Anecdotal evidence gathered from credible online sources and locals suggests that significant illegal logging and mining has been taking place, which has been resulting in an uncontrolled and unsustainable destruction of forests \citepalias{Parvaiz2016, SOER2009}. This is naturally of great concern to the district and its many people who depend on forests and vegetation for their livelihoods. These activities could possibly explain why significant portions of designated forest areas in the study area and Kangra district do not have forest cover. 
+
+\justify
+A natural means of verifying this claim would be to investigate the spatio-temporal changes of forest cover in the study area. However, the majority of publicly available data over several years is that of forest areas in Kangra district. As mentioned earlier, these are not necessarily useful for our purpose, since this data does not reflect the actual forest cover in the district, rather only the legally classified land areas which could possibly host forest cover. There do exist some datasets on forest cover in Kangra district; however, they are only offered for certain years and not all consecutively. Finding regularly updated data on the actual forest cover in the study area is not an easy task; either because the existing data is not publicly available or because it does not exist. Whichever the reality, it is nonetheless an important task to investigate the actual forest cover in the study area. 
+
+\subsection{Public Vegetation Cover Data}
+
+\justify
+An investigation into actual forest cover in the study area requires an analysis of possibly helpful publicly available data. For generality, we will be using the term "vegetation cover" to express the sum of all vegetated areas. Vegetation cover will naturally include forest cover, but also other forms of vegetation such as grasslands and shrubs.
+
+\subsubsection{Data from Indian-Based Organizations}
+
+\justify
+Firstly, we will analyze data regarding vegetation cover in Himachal Pradesh that is offered by Indian-based organizations (Table \ref{table3}). This data can largely be classified into three categories; namely Geographic Information System (\ac{gis}) raster data, GIS vector data and tabular statistical data. GIS raster and vector data can be found on the Bhuvan Geoportal of the Indian Space Research Organization (\href{http://bhuvan.nrsc.gov.in/bhuvan_links.php#}{\ac{isro}}) and is offered in the form of Ocean Color Monitor 2 (\ac{ocm}2) raster data and Land Use Land Cover (\ac{lulc}) vector data. Tabular statistical data on aggregated sums of forest areas and forest cover can be found in reports and studies published by the HPFD (Table \ref{table3}).
+
+\begin{table}[H]
+	\small
+	\def\arraystretch{1.6}
+	\begin{threeparttable}
+		\centering
+		\caption{Public data inventory offered by Indian-based organizations on vegetation cover in the study area}
+		\label{table3}
+		\begin{tabular}{L{2cm} L{6.3cm} L{1.9cm} L{4.1cm}}
+			\toprule[0.25mm]
+			Data Type & Description & Resolution (m) & Data Source \\
+			\midrule[0.35mm]
+			Raster  & OCM2: Filter Normalized Difference Vegetation Index, 2012-2017 & 1000 & Bhuvan ISRO Geo-Portal \\
+			& OCM2: Normalized Difference Vegetation Index - Global Coverage, 2013-2017 & 1000 & Bhuvan ISRO Geo-Portal \\
+			& OCM2: Normalized Difference Vegetation Index - Local Coverage, 2011-2017 & 1000 & Bhuvan ISRO Geo-Portal \\
+			& OCM2: Vegetation Fraction, 2011-2017 & 1000 & Bhuvan ISRO Geo-Portal \\[0.3cm]
+			Vector & Land Use Land Cover (1:250,000), ~~ 2005-16 & \bfseries \textemdash \rm & Bhuvan ISRO Geo-Portal\\
+			& Land Use Land Cover (1:50,000), ~~ 2005-6, 2011-12 & \bfseries \textemdash \rm & Bhuvan ISRO Geo-Portal \\
+			& Land Use Land Cover$^{1}$ (1:10,000): ~~~~ SIS-DP & \bfseries \textemdash \rm & Bhuvan ISRO Geo-Portal \\
+			& Himachal Pradesh Forested Administrative Regions& \bfseries \textemdash \rm & Bhuvan ISRO Geo-Portal \\[0.7cm]
+			Tabular Statistics & Reports and Studies on Forest Areas and Forest Cover$^2$ & \bfseries \textemdash \rm & Himachal Pradesh Forest Department  \\
+			\bottomrule[0.25mm]
+		\end{tabular}
+		\caption*{$^1$Time scale not publically available} \vspace{-5pt}
+		\caption*{$^2$Reports available sporadically online}
+	\end{threeparttable}
+\end{table}
+\vspace{-25pt}
+
+\justify
+Despite the existence of numerous datasets on the vegetation of Himachal Pradesh and the study area, there do exist some pertinent limitations. First and foremost, GIS vector data is not entirely publicly available. For example, one can view the LULC datasets on the web-interface of the Bhuvan geoportal; however, one is not able to download the datasets for further analysis. There is an option to add the LULC layers as Web Map Service (\ac{wms}) layers, however; this option does not allow for active GIS analysis through remote-sensing software for example. Based on information from the ISRO website, the only way to acquire the actual LULC raster data would be to apply for permission to access it through the ISRO. This task would involve sending a proposal to the organization and explaining one's purpose of requiring the data. This task also requires one to prove that his/her organization operates from India, which is not the case in terms of this study. Overall, the task of acquiring vector data from the Bhuvan geoportal involves significant bureaucracy and places a high barrier to entry for public entities wishing to research vegetation cover in the study area.
+
+\vfill
+
+\justify
+Another possible concern with the LULC data is that it is only offered for relatively large scales such as 1:250,000, 1:50,000 and 1:10,000. Because the study area is only 355 km$^2$ in geographical area, LULC data on such large scales might not be completely applicable or effective in investigating vegetation cover. It is also worth noting that only the 1:250,000 scale LULC maps are published annually for spatio-temporal analysis. The sharper 1:50,000 and 1:10,000 LULC datasets are only available for 1-2 cycles in specific years. This could present a challenge for the temporal analysis of vegetation cover changes.
+
+\justify
+If one ignores the prospects of acquiring the national LULC data, one could consider utilizing the OCM2 raster data pertaining to the vegetation cover in the study area (Table \ref{table3}). However, this data is only offered at a resolution of 1 km, which would mean that analysis of vegetation cover in the study area would comprise maximally 355 pixels. This would be insufficient from a data science point of view in conducting analyses on vegetation cover in the study area. In this sense, the data available on the Bhuvan Geo-portal is neither sufficiently accessible nor sensitive for analysis of vegetation cover in the study area. 
+
+\justify
+In light of the limitations of public GIS data, the tabular statistics offered by the Himachal Pradesh Forest Department could possibly be utilized. However, there exist various limitations to this data. For one, the majority of data offered depicts forest areas, which as mentioned earlier do not reflect actual forest cover. For the datasets that do represent forest cover, the data is usually aggregated on a district or sometimes at a Tehsil level. Due to the aggregation of data, it would not be possible to conduct meaningful spatial analysis of vegetation cover. Temporal analyses of this aggregated forest cover data could also prove to be difficult, because the data is only publicly available for certain years and not all consecutively.
+
+\justify 
+The analysis into the public data inventory of vegetation cover from Indian-based organizations shows that publicly accessible and relevant data are lacking. Although it might be true that the government has complete access to high quality data; more often than not it eventually becomes the role of Non-Governmental Organizations (NGOs) and private individuals to access and utilize this data in order to identify trends in changes of vegetation cover. If the barriers to entry for such data are high and if the publicly available data is not of use, then public entities would not be able to assist in further analysis of vegetated areas. More often than not, a limited Forest Department would require the assistance of public entities to assist in vegetation monitoring. The current state of Indian-based public data; GIS data in particular, does not provide a conducive means for this to happen.
+
+\subsubsection{Data from External Organizations}
+
+\justify 
+Due to the limitations of the data offered by Indian-based organizations, we could opt to search for vegetation cover data offered by external (non-Indian-based) organizations. This public data inventory is summarized in Table \ref{table7} below.
+
+\justify
+The data provided by external organizations comes in the form of GIS raster data. Three keys organizations were identified; namely the United States Geological Survey (\ac{usgs}), National Aeronautics and Space Administration (\ac{nasa}) and the National Oceanic and Atmospheric Administration (\ac{noaa}); which are primarily based in the United States of America (\ac{usa}). The data products they each offer are Landsat, Moderate Resolution Imaging Spectroradiometer (\ac{modis}) and Advanced Very-High Resolution Radiometer (\ac{avhrr}) products respectively. The full details of the products are neatly summarized on the webpage of the Global Land Cover Facility (\href{http://glcf.umd.edu/data/}{\ac{glcf}}) from the University of Maryland, USA.
+
+\justify
+As per the objective of our study; we would like to investigate recent losses of vegetation cover and would therefore need to search for data that would be relevant from 2013-2017. In light of this, we would not be able to use the NOAA AVHRR products due to the limitations in their timespan. The NASA MODIS data products would also be useful, however, their resolutions comprise 250 m and 500 m, which would result in an active analysis of maximally $\sim$6,000 pixels in the study area. This might be sufficient from a data science point of view, but ideally we would like to maximize the available pixels for analysis. Therefore, we would look for data products with finer resolutions. 
+
+\justify
+In light of this, the remaining products that we could use are the USGS Landsat products. The Global Forest Cover Change dataset provides information on the degree of vegetation cover change recorded in each pixel from 2000 until 2005. The Tree Cover Continuous Fields provides information about the percentage of each pixel being covered by woody vegetation greater than 5 meters in height. In terms of spatial resolution, the datasets are sufficiently spatially sensitive and would result in an active analysis of $\sim$400,000 pixels. The only limitation of these datasets is the intervals in which the products are available. Both USGS Landsat products are available for analysis in 5 year intervals. Although this would be useful to study long-term changes in vegetation cover, it might not be useful in studying short-term changes in vegetation cover due to illegal mining and logging, for example. For this reason, we would not be able to use the USGS Landsat products for our purpose.
+
+\begin{table}[H]
+	\small
+	\centering
+	\def\arraystretch{1.6}
+	\begin{threeparttable}
+		\caption{Public data inventory offered by external organizations on vegetation cover in the study area}
+		\label{table7}
+		\begin{tabular}{ L{3.25cm} L{8.5cm} L{2.9cm}}
+			\toprule[0.25mm]
+			Data Source & Description & Resolution (m)\\
+			\midrule[0.35mm]
+			USGS Landsat & Global Forest Cover Change, 2000-2005 ~~~~~~~~~~~~~~~~~~~(1 dataset with 5 year interval) & 30 \\
+			& Tree Cover Continuous Fields, 2000-2015 ~~~~~~~~~~~~~~~~~~~~~~(3 datasets with 5 year intervals each) & 30 \\\\[-0.6cm]
+			NASA MODIS  & Vegetation Continuous Fields, 2000-2010 & 250 \\
+			& Vegetative Cover Conversion, 2001-2005 & 250 \\
+			& Land Cover, 2001-2012 & 500  \\
+			& Lead Area Index (LAI), 2000-2014 & 1000 \\
+			NOAA AVHRR & UMD Land Cover Classification, 1981-1994 & 1000 \\
+			& Tree Cover Continuous Fields, 1992-1993 & 1000  \\	
+			\bottomrule[0.25mm]
+		\end{tabular}
+	\end{threeparttable}
+\end{table}
+
+\justify
+To conclude, the data offered by Indian-based organizations is neither publicly accessible nor sensitive enough for analysis of vegetation cover in the study area. As a result, we looked for public data on vegetation cover in the study area offered by external organizations. The data offered by external organizations is indeed promising, however; it is still temporally and/or spatially irrelevant for our application. This evidence therefore justifies our objective to propose an alternative vegetation monitoring strategy for effective spatio-temporal analysis of vegetation cover in the study area.
+
+% Season table:
+
+%\begin{table}[H]
+%	\small
+%	\def\arraystretch{1.6}
+%	\begin{threeparttable}
+%		\centering
+%		\caption{Description of seasons in the study area \citep{HP2012}}
+%		\label{table1}
+%		\begin{tabular}{L{4.5cm} L{10.5cm}}
+%			\toprule[0.25mm]
+%			Seasons & Pattern/Period\\
+%			\midrule[0.35mm]
+%			Winter   & Low temperatures, dry, snow in higher altitudes \\
+%			& \textbf{December-February} \\
+%			Pre-monsoon/Summer  & Extremely dry in lower elevations. Mild in upper hills and valleys \\
+%			& \textbf{March-May} \\
+%			South-west monsoon   & Heavy rains, humid, hot in lower elevations \\
+%			& \textbf{June-September} \\
+%			Post-monsoon   & Moderate temperature \\
+%			& \textbf{October-November} \\
+%			\bottomrule[0.25mm]
+%		\end{tabular}
+%	\end{threeparttable}
+%\end{table}

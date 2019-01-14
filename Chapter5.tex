@@ -1,0 +1,98 @@
+\section{Conclusions}
+
+\justify
+To conclude this study, we first return to the objective that we set up at the start of the study. Our objective was stated as follows:
+
+\justify
+\textit{"The objective of this study is therefore to propose an alternative vegetation monitoring strategy in the study area. The proposed strategy will utilize and produce data that is publicly accessible and spatially and temporally sensitive enough to analyze vegetation cover in the study area. The proposed vegetation monitoring strategy should allow for effective spatio-temporal analysis of vegetation cover in the study area.}
+
+\justify
+\textit{The end goal of this study is to identify, on an annual or shorter basis, vegetated sub-regions in the study area that have undergone significant destruction from 2013-2017. With the help of these identifications, HPFD or other forest organizations could verify their own vegetation cover data and more efficiently allocate resources into the investigating the areas which are experiencing loss of vegetation."}
+
+\justify
+In the course of this study, we utilized freely-available Landsat 8 SR data with a spatial resolution of 30 m and temporal resolution of 16 days. We filtered Landsat 8 SR data relevant to the study area and obtained 26 reliable images relevant to the time period from 2013-2017. These images had an approximate temporal separation of 2 months; which we would can deem sufficiently temporally sensitive. We collected field data to generate vegetation polygons, which were used in the random forests algorithm to classify the 26 Landsat 8 SR images into vegetation classification images. The random forests algorithm was deemed sufficiently accurate, exhibiting a mean kappa coefficient of $\sim$80$\%$.
+
+\justify
+With these classification images, we were able to assemble the images into groups and conduct vegetation cover loss analysis using a median difference filtering technique followed by the Mann-Whitney $U$ test on a limited search space. By comparing annual groups of images, we were able to generate a set of flagged pixels that indicate likely locations of vegetation loss. These could be presented as raw and clump flagged pixels, depending on whether the authority would deem grouped pixels of higher priority than lone pixels. These flagged pixels were generated on an annual basis and could be used by relevant monitoring authorities to allocate resources for further investigation. Technically, we could also identify flagged pixels on a shorter basis, such as on a biannual basis. The reliability of the biannual flagged pixels would however need to be further investigated.
+
+\justify
+We discussed certain limitations to our approach of identifying flagged pixels. In particular, we ascertained that flagged pixels in high-slope terrains (above $\sim$70$\%$), cropland areas and riverbank areas tend to be less reliable than flagged pixels in other areas. Despite this limitation, we showed through positive verifications that our proposed approach can be effective in identifying key regions where vegetation loss is taking place. 
+
+\justify
+Overall, based on the evidence shown in this study; we can conclude that the proposed vegetation monitoring strategy is a viable and effective one. Naturally, a vegetation monitoring authority would need to put this strategy to test for us to have further evidence regarding its real-life effectiveness.
+
+\justify
+Below are advantageous properties pertaining to the vegetation monitoring strategy that we aimed to develop through the course of this study. We have mentioned to which extent these ideas have been actualized and what could be done further.
+
+\begin{itemize}
+    \item [\textbf{1.}] \textbf{Efficient and cost-effective in monitoring vegetation in the study area}
+     
+    Generally speaking, the proposed vegetation monitoring strategy can be considered efficient and cost-effective. Field data collection requires $\sim$40 hours of full working time and computational tasks require an upper bound of $\sim$7 hours computational time. The aforementioned resources were utilized to analyze 4 years of data from 2013-2017. Naturally, if data is analyzed on a single year-to-year basis, resource requirements would be significantly lower; in particular for computational tasks since field-data collection would need to be done thoroughly nonetheless.
+    
+	\item [\textbf{2.}] \textbf{Utilize open-source remote-sensing data and software. Well-tested machine-learning algorithms should be utilized in tasks involving classification}
+	
+	Freely available remote sensing Landsat 8 SR data was utilized in this study. The well-tested random forests algorithm was utilized for classification purposes. Open-source code and softwares, such as Google Earth Engine and R, were used to conduct the bulk of analyses in this study. The only exception was the utility of ESRI's ArcGIS. However, this could be easily substituted with open-source software such as QGIS.
+	
+	\item [\textbf{3.}] \textbf{Potential for reproducibility and automation; in order to reduce costs pertaining to repetitive tasks}
+	
+	It is possible to reproduce results for verification purposes. For example, another team can carry out similar field data collection and computational analyses to compare against our generated results. Processes can also be automated, since the code for our algorithms is freely available. If there is interest from a monitoring authority, this strategy is reproducible and has the potential to be completely automated.
+	
+	\item [\textbf{4.}] \textbf{Potential for utilization in areas other than the study area; possibly with different climates and vegetation types}
+	
+	There is potential for utilization of these techniques and models in other areas. For example, we would predict high accuracy of classification if we would use our existing random forests models on other regions in the Kangra district with similar altitudes. This is because the vegetation distribution in this region is largely similar.
+	
+	If we consider areas that are ecologically very different compared to the study area, then perhaps the exact random forests model that we used might not be applicable. However, another team in such a location could carry out a similar approach and gather relevant field data and then train their own version of a random forests model to that field data. With this, they could possibly conduct a meaningful vegetation cover analysis of their own study region.
+	
+\end{itemize}
+
+\clearpage
+
+\section{Recommendations}
+
+\justify
+To complete this study and thesis report, we would like to suggest certain recommendations for further development of this research. Below, we have divided the recommendations into various categories. 
+
+\begin{itemize}
+	\item [\textbf{a.}] \textbf{Vegetation Cover Classification}
+	
+	There are several recommendations under this category. Firstly, under the methodologies mentioned in this study, we had trained every random forests model using the vegetation polygon data collected during field work. Even though this data was collected in early 2017, we had assumed this field data was approximately consistent for the last 4-5 years. We used this assumption to train the random forests model on images from 2013-2017. 
+	
+	\justify
+	It is possible that the training data was consistent for images from 2016-2017 and not for earlier images. To investigate this further, we would recommend using the developed random forests models from images in 2016-2017 and to apply these models to images from earlier years. This could be done to investigate if the 2016-2017 models would predict vastly different or approximately similar vegetation classifications for the earlier years. This could also identify the appropriateness of different random forests models based on seasonal variations.
+	
+	\justify
+	Next, we had assumed that vegetation class polygons used for training would be fit for training the random forests model for 4-5 years. In case this was not a firm assumption, we would recommend further research to investigate how often one could refresh the field data inventory to keep supervised classification algorithms relevant. 
+	
+	\justify
+	During the random forests algorithm development, we had recommended an undersampling procedure to create a balanced training dataset. However, we had not applied this undersampling procedure to our test dataset. That is to say, our test datasets were slightly imbalanced. Our recommendation to future research would be to attempt undersampling the test dataset for more unbiased test accuracy measures.
+	
+	\justify
+	We acknowledge the heterogeneity of the vegetation cover landscape in the study area and understand that it can be difficult to classify vegetation cover into discrete classes. Many times, vegetation classes are mixed and show different properties at different times, leading to stochastic variations which may register as vegetation cover losses or gains without actually representing such events in reality. For this, we would recommend other possible supervised classification techniques, such as fuzzy classification techniques. These would register probabilities of vegetation being of a certain class. This might assist in informing the end-user about the actual heterogeneity of the vegetation cover landscape before making a judgment about loss or gain of vegetation cover. 
+	
+	\justify
+	Lastly, we would also recommend future research to use Sentinel-2 BOA data in classifying vegetation. Sentinel-2 data is on average more spatially and spectrally sensitive compared to Landsat 8 SR data; with 4 bands (VIS/NIR) and 6 bands (NIR/SWIR) having 10m and 20m spatial resolutions respectively. Although this would involve more computational effort in re-sampling data, overall the Sentinel-2 data will assist in producing more spatially sensitive classifications of vegetation. This would be important in mitigating the limitations of spatially insensitive data.
+	
+	\clearpage
+	
+\item [\textbf{b.}] \textbf{Vegetation Cover Loss Analysis}\vspace{-0.25cm}
+
+\justify
+Regarding vegetation loss analysis, we would recommend future research to investigate into issues of low reliability of flagged pixels. As mentioned in our study, areas with high slopes, predominant cropland areas and riverbank areas have low reliability for flagged pixels. It would be useful if future research could omit such pixels or mitigate the occurrences of these flagged pixels. 
+
+\justify
+In this regard, it would be good if future research could isolate cropland as a separate class in order to have a separate tracking process for non-agricultural vegetation. This would also reduce the seasonal variation in vegetation cover; which would be otherwise internalized if cropland is considered as part of one class with grassland and shrubs as per our study. It would also be useful for future studies to separate evergreen and non-evergreen vegetation types in order to contain seasonal variations in vegetation cover.
+
+\justify
+Next, regarding the Mann-Whitney $U$ test, we would recommend future research to utilize the CRAN "coin" package for computational purposes. This is because the "coin" package offers a comprehensive tie correction procedure, which could produce more accurate Mann-Whitney $U$ test results. The Mann-Whitney $U$ test used in our study corrected ties by assuming a normal distribution with continuity correction. This approximation could have possibly contributed to some error.
+
+\justify
+Lastly, regarding procedures to verify flagged pixels for vegetation loss, we would recommend future research to find sharp satellite imagery from various time periods. We would also encourage utility of existing global land cover datasets from the GLCF to verify vegetation cover loss.\\
+
+\item [\textbf{c.}] \textbf{Overall Vegetation Monitoring Strategy}\vspace{-0.25cm}
+
+\justify
+In this study, we conducted an in-depth analysis of various parts of a vegetation monitoring strategy; such as field data acquisition, vegetation cover classification etc. However, we did not string together all of the parts and discuss them as a comprehensive strategy. We would therefore recommend future research to study the vegetation monitoring strategy as a whole and investigate parameters such as how often to change field data inventories. It would be useful if future research develops an overall schematic with detailed connections between each of the operating nodes.
+
+\justify
+Additionally, remote-sensing data from satellite has pertinent limitations such as lack of availability due to clouds. Future research could also investigate the utility of drones in order to mitigate limitations of satellite-based remote sensing data. This might assist in conducting real-time analyses and more in-depth investigations.
+\end{itemize}

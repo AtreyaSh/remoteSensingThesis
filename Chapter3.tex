@@ -1,0 +1,573 @@
+\section{Data Inventories and Methodologies}
+
+\subsection{Pre-Processing Remote Sensing Data}
+
+\subsubsection{Remote Sensing Data Selection}
+
+\justify
+Before acquiring the actual remote sensing surface reflectance data, it was necessary to acquire spatial information regarding the geography of India, Himachal Pradesh, Kangra district and Dharamshala Tehsil. Indian-based data providers such as the Bhuvan ISRO geo-portal were surveyed; however, publicly acquirable data could not be found. Ultimately, the Global Administrative Areas (\href{http://gadm.org/about}{\ac{gadm}}) online dataset was used. This dataset was developed by Robert Hijmans, in collaboration with the University of California; Berkeley and Davis, Museum of Vertebrate Zoology, the International Rice Research Institute and others. The GADM database provides \textit{vector} files on global administrative regions, such as the polygons of countries, states and most administrative sub-regions. The dataset was found for India and contained information up till the Tehsil level, which was optimal for our purposes. To verify the accuracy of the data, the acquired vector file of India and relevant sub-regions was compared with and successfully verified against the (view-only) spatial information provided on the Bhuvan ISRO geo-portal. The vector file acquired for India, Himachal Pradesh, Kangra district and Dharamshala Tehsil can visualized seen in Figure \ref{Fig1}. The preparation of Figure \ref{Fig1} was conducted with ArcMap version 10.3.1; courtesy of the Brandenburg University of Technology, Cottbus-Senftenberg, for the provision of a student license to use the software. 
+
+\justify
+Next, based on our analysis of publicly accessible remote-sensing surface reflectance data (Table \ref{table6}), the most relevant remote-sensing data had to be selected for our purpose. Out of the listed products, the Resourcesat-1 data was the first to be unlisted due to ambiguity in its measurement type and lack of reliable QA information. Furthermore, there were a maximum of 14 datasets available for the study area; which would not necessarily allow for a meaningful analysis. Next, the Sentinel-2 BOA product was considered. This product was indeed promising due to its 13 spectral bands in the VIS, NIR and SWIR regions of the EMR spectrum; all with relatively sharp spatial resolution. This dataset also has a high temporal resolution or frequency of 5 days. 
+
+\justify
+However, there were some technical limitations to this dataset. For one, acquiring the Sentinel-2 BOA product would have been time-consuming and computationally "expensive"; as it would involve downloading the at-sensor reflectance first and then manually correcting the data using the Sentinel-2 Toolbox. Furthermore, because of the differentiated spatial resolutions of the spectral bands; with 10 m, 20 m and 60 m resolutions, processing the Sentinel-2 data would entail further complexity as the datasets would need to be resampled and possibly interpolated to ensure the integrity of analysis. This could also be a time-consuming and computationally expensive task. Finally, the Sentinel-2 data is only available from June 2015 onwards; which could be a limitation as we would ideally like to analyze the changes in vegetation cover for at least the last 3-5 years.
+
+\justify
+In light of these factors, the remaining USGS Landsat 4-5, 7 and 8 SR products were considered. These products were promising as they have up to 7 spectral bands in the VIR, NIR and SWIR regions of the EMR spectrum; each with 30 m spatial resolution. Furthermore, these datasets have a high temporal resolution of 16 days. Additionally, a reliable QA band is provided with the data and the user is able to filter out possible disturbances such as clouds, cloud shadows, water and snow. This would be ideal for our purposes. Out of the three USGS Landsat candidates, the Landsat 8 SR product was selected because it has 7 spectral bands compared to the Landsat 4-5 and 7 SR products; which have only 6 spectral bands. Furthermore, the Landsat 8 SR product is offered from February 2013 onwards, which allows us to conduct an analysis for 3-4 years; which would represent an ideal scenario for our study. With these criteria, the Landsat 8 SR product was selected for further analysis. Table \ref{tableL8SR} below summarizes spectral characteristics of the 7 bands of the Landsat 8 SR product.
+
+\begin{table}[H]
+	\centering
+	\small
+	\def\arraystretch{1.3}
+	\begin{threeparttable}
+		\caption{EMR categories, wavelengths and spatial resolutions associated with 7 bands of Landsat 8 SR Imagery \citep{rs61010232}}
+		\label{tableL8SR}
+		\begin{tabular}{L{2.5cm} L{5.5cm} L{3.8cm} L{2.5cm}}
+			\toprule[0.25mm]
+			Landsat 8 SR Band & EMR Category & Wavelength ~~~~~~~~~~Range (nm) & Resolution (m)\\
+			\midrule[0.35mm]
+			1   & Ultra Blue & 435 - 451 & 30\\
+			2   & Blue & 452 - 512 & 30\\
+			3   & Green & 533 - 590& 30 \\
+			4   & Red & 636 - 673 & 30\\
+			5   & Near Infrared (NIR) & 851 - 879 & 30\\
+			6   & Shortwave Infrared (SWIR) 1 & 1566 - 1651 & 30\\
+			7   &  Shortwave Infrared (SWIR) 2 & 2107 - 2294 & 30\\
+			\bottomrule[0.25mm]
+		\end{tabular}
+	\end{threeparttable}
+\end{table}
+
+\subsubsection{Pre-Processing Methodologies}
+
+\justify
+USGS Landsat and other related products have been traditionally offered on the USGS Earth Explorer (\href{https://earthexplorer.usgs.gov/}{\ac{ee}}) geo-portal. This geo-portal is user-friendly and enables a comfortable search for images relevant to the study area. However, one limitation of this geo-portal is that it does not enable the user to bulk pre-process data before downloading it. For our purposes, we would ideally like to perform pre-processing tasks such as masking and cloud-removal before downloading the data for further analysis. In light of this limitation, the Google Earth Eargine (\href{https://earthengine.google.com/}{\ac{gee}}) was utilized to perform these pre-processing tasks. The Google Earth Engine is a computing platform that allows users to run geospatial analysis on Google's infrastructure. The Google Earth Engine provides users with a web-based Integrated Development Environment (\ac{ide}) to write and run scripts within the Earth Engine Javascript Application Programming Interface (\ac{api}). This allows us to smoothly customize our pre-processing tasks. Screenshots of both the USGS Earth Explorer and Google Earth Engine Code Editor can be seen in Figure \ref{fig10}.
+
+\justify
+Upon receiving access to the Google Earth Engine through a request using an active Google account, the following simplified flowchart of pre-processing tasks was implemented, as shown in Figure \ref{fig11}. The corresponding detailed flowchart and GEE code can be found in Appendix \hyperref[app1]{2}. Firstly, the entire Landsat SR 8 dataset was imported into the GEE code editor. This dataset is already present in the Google database, so it could be directly imported. Next, the images were filtered using the Worldwide Reference System 2 (\ac{wrs}2) Path/Row of 147/38, dates ranging from 2013-01-01 to 2017-05-01 and cloud cover being less than or equal to 10. The latter filter served the purpose of querying images that are approximately cloud-free. After these general filters, a total of 31 Landsat 8 SR images were queried. 
+
+\justify
+In order to further pre-process the images for analysis, a set of further filters were applied. Firstly, the images were clipped using the polygon of the study area; in order focus on the image extents relevant to our study. Next, QA bands of each image were queried to extract the water, snow, clouds and clouds shadow layers. Pixels with these aforementioned attributes were then eliminated in order to provide clear images. The end products were clear images whose pixels were not affected by water, snow, clouds and cloud shadows.
+
+\justify
+Next, terrain and hillshade filters were applied to eliminate pixels affected by non-vegetated rocky surfaces and terrain-related shadows. The 30 m resolution NASA Shuttle Radar Topography Mission (\ac{srtm}) Digital Elevation Model (\ac{dem}) was imported into the GEE code editor. Pixels lying at altitudes above 3,000 m were eliminated; with the assumption that altitudes above 3,000 m host mostly non-vegetated surfaces. Next, using the metadata of each image, the solar azimuth and zeniths were queried. With the SRTM DEM, the solar azimuth and zenith, a hillshade raster was formed for each image. Pixels with hillshade values less then or equal to 0.01 were removed from the images. The end products were clear images excluding pixels of rocky non-vegetated areas and those affected by terrain-related shadows.
+
+\begin{figure}[H]
+	\centering
+	{
+	\setlength{\fboxsep}{1pt}%
+	\setlength{\fboxrule}{0.01pt}%
+	\fbox{\includegraphics[trim={1.2cm 5.9cm 1.2cm 3.05cm},clip, width = 12cm]{EE_1}} \\
+	\vspace{0.3cm}
+	\fbox{\includegraphics[trim={1cm 17.9cm 4.3cm 1cm},clip,width = 12cm]{GEE_1}} \\
+    }
+	\vspace{0.2cm}
+	\caption{USGS Earth Explorer Geo-Portal (top) and Google Earth Engine Code Editor (bottom)}\label{fig10}
+\end{figure}
+\vspace{-12pt}
+
+\justify
+Finally, the cleaned images were then manually checked in order to scan for other possible errors. Out of the 31 images, 5 images were significantly compromised by disturbances such as haze; which could not be detected and eliminated via the Landsat QA mask algorithm. In order to prevent later errors in our analysis, these 5 images were eliminated from our analysis. The remaining pre-processed 26 images were then exported into Google Drive in their native EPSG:32643 coordinate reference system (\ac{crs}). 
+
+\begin{figure}[H]
+\centering
+\footnotesize
+\begin{tikzpicture}[auto,
+block_center/.style ={rectangle, draw=black, thick, fill=white,
+	text width=8em, text centered,
+	minimum height=4em},
+block_left/.style ={rectangle, draw=black, thick, fill=white,
+	text width=16em, text ragged, minimum height=4em, inner sep=6pt},
+block_noborder/.style ={rectangle, draw=none, thick, fill=none,
+	text width=18em, text centered, minimum height=1em},
+block_assign/.style ={rectangle, draw=black, thick, fill=white,
+	text width=18em, text ragged, minimum height=3em, inner sep=6pt},
+block_assign2/.style ={rectangle, draw=black, thick, fill=white,
+	text width=10em, text ragged, minimum height=3em, inner sep=6pt},
+block_lost/.style ={rectangle, draw=black, thick, fill=white,
+	text width=16em, text ragged, minimum height=3em, inner sep=6pt},
+line/.style ={draw, thick, -latex', shorten >=0pt}]
+% outlining the flowchart using the PGF/TikZ matrix funtion
+\matrix [column sep=18mm,row sep=9mm] {
+	% enrollment - row 1
+	\node [block_left] (landsat8import) {Import Landsat 8 SR Product. General filters: \\[0.2cm]
+	1. WRS2 row/path: 147/38 \\[0.1cm]
+    2. Dates: 2013-01-01 - 2017-05-01 \\[0.1cm]
+    3. Cloud cover: $\leqslant$10 \\[0.2cm]
+    Number of images: 31};\\
+	% enrollment - row 2
+	\node [block_left] (landsat8clear) {Vector and QA filters: \\[0.2cm]
+	1. Clip to polygon of the study area. \\[0.1cm]
+	2. Eliminate pixels affected by water, snow, clouds and cloud shadows.}; \\
+	\node [block_left] (landsat8hillshade) {Terrain and hillshade filters:\\[0.2cm]
+	1. Eliminate pixels with elevations $\geq$ 3,000 m. \\[0.1cm]
+	2. Compute hillshade and eliminate pixels with hillshade $\leq$0.01.}; \\
+	\node [block_left] (landsat8export) {Check and export:\\[0.2cm]
+	1. Manual check on images.\\[0.1cm]
+	2. Export selected images onto Google Drive \\[0.2cm]
+
+Final number of images: 26}; \\
+};
+% end matrix
+% connecting nodes with paths
+\begin{scope}[every path/.style=line]
+% paths for enrollemnt rows
+\path (landsat8import) -- (landsat8clear);
+\path (landsat8clear) -- (landsat8hillshade);
+\path (landsat8hillshade) -- (landsat8export);
+\end{scope}
+  \end{tikzpicture}
+  \caption{Simplified flowchart for pre-processing Landsat 8 SR Data within the GEE code editor}\label{fig11}
+\end{figure}
+
+\subsubsection{Pre-Processed Remote Sensing Data Inventory}
+
+\justify
+Table \ref{table11} below summarizes the characteristics of the resulting 26 pre-processed images.
+
+\begin{ThreePartTable}
+	\centering
+	\small
+	\def\arraystretch{1.2}
+	\begin{longtable}{L{2.3cm} L{4.5cm} L{3.4cm} L{4cm}}
+		\caption{Summary of pre-processed images; seasonal classification based on \citetalias{HP2012}; pp. 42.}
+		\hskip15pt	
+		\label{table11}\\
+		\toprule[0.25mm]\\[-0.5cm]
+		Year & Landsat Image ~~~~~~~~~~~~~~~~~~~Identification (\ac{id}) & Date Acquired ~~~~~~~~~~(yy/mm/dd) & Seasonal Classification \\\\[-0.5cm]
+		\midrule[0.35mm]\\[-0.4cm]
+		2013 & LC81470382013108 & 2013-04-19 & Summer\\  
+		& LC81470382013140 & 2013-05-21 & Summer\\
+		& LC81470382013156 & 2013-06-06 & South-West Monsoon \\
+		& LC81470382013268 & 2013-09-26 & South-West Monsoon \\
+		& LC81470382013316 & 2013-11-13 & Post-Monsoon\\
+		& LC81470382013332 & 2013-11-29 & Post-Monsoon \\\\[-0.3cm]
+		2014 & LC81470382014159 & 2014-06-09 & South-West Monsoon \\[0.1cm]
+		\midrule[0.25mm]\\[-0.6cm]
+		\caption*{\raggedright\textit{*continued}} \hskip20pt\\
+		\midrule[0.25mm]\\[-0.5cm]
+		Year & Landsat Image ID & Date Acquired ~~~~~~~~~~(yy/mm/dd) & Seasonal Classification \\\\[-0.5cm]
+		\midrule[0.35mm]\\[-0.4cm]
+		& LC81470382014191 & 2014-07-11 & South-West Monsoon  \\
+		& LC81470382014239 & 2014-08-28 & South-West Monsoon \\
+		& LC81470382014303 & 2014-10-31 & Post-Monsoon\\
+		& LC81470382014319 & 2014-11-16 & Post-Monsoon \\
+		& LC81470382014335 & 2014-12-02 & Winter \\
+		& LC81470382014351 & 2014-12-18 & Winter \\\\[-0.3cm]
+		2015 & LC81470382015018 & 2015-01-19 & Winter \\
+		& LC81470382015082 & 2015-03-24 & Summer \\
+		& LC81470382015114 & 2015-04-25 & Summer \\
+		& LC81470382015178 & 2015-06-28 & South-West Monsoon \\
+		& LC81470382015274 & 2015-10-02 & Post-Monsoon \\
+		& LC81470382015290 & 2015-10-18 & Post-Monsoon \\
+		& LC81470382015322 & 2015-11-19 & Post-Monsoon \\\\[-0.3cm]
+		2016 & LC81470382016005 & 2016-01-06 & Winter \\\
+		& LC81470382016117 & 2016-04-27 & Summer \\
+		& LC81470382016133 & 2016-05-13 & Summer \\
+		& LC81470382016293 & 2016-10-20 & Post-Monsoon \\
+		& LC81470382016357 & 2016-12-23 & Winter \\\\[-0.3cm]
+		2017 & LC81470382017071 & 2017-03-13 & Summer \\\\[-0.4cm]
+		\bottomrule[0.25mm]
+	\end{longtable}
+\end{ThreePartTable}
+
+\subsection{Field Data Acquisition}
+
+\subsubsection{Field Data Collection Methodologies}
+
+\justify
+With the pre-processed remote-sensing data inventory finalized, we could then proceed with the gathering of field data. As discussed previously under \hyperref[litrev]{"Image Classification Algorithms"}, vegetation classification has been conducted in past-studies via classification algorithms; mainly involving use of supervised classification algorithms. This type of classification algorithm would entail collection of training data of certain desired classes in order to calibrate the algorithm.
+
+\justify
+Various studies and means of classifying vegetation were reviewed in Table \ref{table10}. It was decided that the field data collection would focus on the following key classes:
+
+\begin{itemize}
+	\item [1. ] \bfseries Coniferous forests: \rm Plots of land containing predominantly coniferous tree species of heights greater than 5 m
+	\item [2. ]\bfseries Broad-leaved forests: \rm Plots of land containing predominantly broad-leaved tree species of heights greater than 5 m
+	\item [3. ]\bfseries Mixed forests: \rm Plots of land containing predominantly both coniferous and broad-leaved tree species of heights greater than 5 m
+	\item [4. ]\bfseries Cropland: \rm Plots of land used regularly for agricultural purposes
+	\item [5. ]\bfseries Shrubs: \rm Plots of land covered predominantly with shrubs and young trees of 0.5 - 5 m height
+	\item [6. ]\bfseries Grassland: \rm Plots of land covered predominantly with grass below 0.5 m in height
+	\item [7. ]\bfseries Non-vegetated: \rm Plots of land predominantly without vegetation cover; such as urban areas, rocky areas and bare soil
+\end{itemize}
+
+\justify
+With these details in mind, the field data collection commenced in 4 separate sessions in March 2017. Various knowledgeable locals in the region were consulted regarding possible locations of the various vegetation classes. Once these details were collected, a 4-wheel drive car was used to drive around the mountainous regions to record the positions and rough bounding polygons of the various vegetation types. For certain mountainous regions without accessible roads, we had trekked up mountains in order to record the relevant positions and polygons. For the recording of positions and polygons of various vegetation types, a Samsung Galaxy S4, GT-i9505, was used with the assistance of the open-source version of the GPS Status and Toolbox \href{https://play.google.com/store/apps/details?id=com.eclipsim.gpsstatus2}{App}. A screenshot of the app can be found below in Figure \ref{fig12}. All points were recorded in the native World Geodetic System 1984 (\ac{wgs84}) CRS; which has the EPSG identifier of EPSG:4326. A summary of field activities can be found in Table \ref{tableAct}. The complete list of measured GPS coordinates can be found in Appendix \hyperref[app4]{1}. 
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[trim={0 7.5cm 0 0},clip, width = 5cm]{gpsstatus3}
+	\includegraphics[trim={7.7cm 0 12cm 0},clip, width = 10cm]{20170306_160532} \\
+	\vspace{0.2cm}
+	\caption{Screenshot of GPS Status and Toolbar \href{http://pagasa.jp/wp-content/uploads/2015/07/gpsstatus3.png}{App} (left); surveying coniferous forests (right)}\label{fig12}
+\end{figure}
+
+\justify
+A common limitation of using an android device for Global Positioning System (\ac{gps}) measurements is the corresponding low accuracy. Unfortunately, for the case of this study; a well-calibrated GPS device was not available and therefore the remaining option was to use an android device. As a mitigating factor, positions and polygons of vegetation classes were only recorded when there were at least 10 satellites available to reference our positions. Furthermore, positions and polygons were only recorded when the mean error of the position was less than 5 m. To further improve the accuracy of the measurements, various pictures of the classified areas were taken and after each field work session, our points were cross-verified and plotted using the polygon function in Google Earth \href{https://www.google.com/earth/desktop/}{Pro}. Google Earth Pro hosts sharp natural colour images ($<$5 m resolution) of the study area; which allowed us to conduct accurate cross-verification with the pictures taken. The satellite images in Google Earth Pro were taken in the same approximate time period as our field study; and this was also useful in verifying our recorded points before plotting them and constructing the relevant polygons. 
+
+\begin{table}[H]
+	\centering
+	\small
+	\def\arraystretch{1.3}
+	\begin{threeparttable}
+		\caption{Summary of field work activities by date}
+		\label{tableAct}
+		\begin{tabular}{L{3cm} p{12cm}}
+			\toprule[0.25mm]
+			Date & Field Work Activities \\
+			\midrule[0.35mm]
+			02 March 2017 & Traveled downhill to the south of Fatehpur and took GPS measurements of coniferous forests, broad-leaved forests and croplands.\\
+			04 March 2017 &  Traveled near Dharamshala city and visited the nearby coniferous forest and tea plantations. Took GPS measurements of surrounding vegetation and non-vegetated (urban) areas.\\
+			07 March 2017 & Traveled to the east of Yol Cantonement. Took GPS measurements of shrubs, croplands, grasslands and coniferous forests. \\
+			16 March 2017 & Trekked up north of Khanyara village towards Thathri point. Ascended up to altitudes of 2,000 m a.m.s.l and took GPS measurements of predominantly broad-leaved forests.\\
+			\bottomrule[0.25mm]
+		\end{tabular}
+	\end{threeparttable}
+\end{table}
+
+\justify
+An additional limitation in surveying vegetation classes is the inherent temporal variability. For example, a plot of grassland which was surveyed to have been grassland in 2017 could have been cropland in 2015. Similarly, a plot of coniferous forest in 2017 could have been replanted in 2015. Such variability might lead to errors in the classification algorithm; since we would use these classes as training data for the last 3-5 years. This would imply that selected training data should have an approximate consistency over the last 3-5 years. In order to mitigate such errors, we had interviewed locals in the region to ensure that the areas surveyed had the same approximate vegetation cover for at least the last 5 years. Furthermore, we often surveyed vegetated areas which showed significantly high vegetation density; which we recognized as an indicator of the health, age and stability of the vegetation.
+
+\subsubsection{Field Data Inventory}
+
+\justify
+During the field data collection, a total of 82 locations were georeferenced and recorded. Figure \ref{fig13} shows the georeferenced points recorded during the field data collection superposed on a natural color satellite image of the study area. 
+
+\justify
+As seen from the map, a variety of locations such as mountains, hills and flat areas were surveyed. With these recorded points, we were able to draw polygons of the various vegetation cover classes using Google Earth Pro. Table \ref{table12} shows a summary of polygons and relevant characteristics for each vegetation cover class. Figure \ref{fig14} shows the corresponding polygons superposed onto a natural color satellite image of the study area. For both maps, the Universal Transverse Mercator (\ac{utm}) Zone 43N projection was utilized.
+
+\begin{table}[H]
+	\centering
+	\small
+	\def\arraystretch{1.3}
+	\begin{threeparttable}
+		\caption{Summary of vegetation class polygons and their characteristics}
+		\label{table12}
+		\begin{tabular}{L{4.2cm} L{1cm} L{3.5cm} L{1cm} L{4cm}}
+			\toprule[0.25mm]
+			Vegetation Class && Number of Polygons && Geographical Area (km$^2$)\\
+			\midrule[0.35mm]
+			Coniferous forests && 18 && 0.451 \\
+			Broad-leaved forests && 27 && 0.645 \\
+			Mixed forests && 1 && 0.00348\\
+			Cropland && 13 && 0.358\\
+			Shrubs && 11 && 0.135\\
+			Grassland&& 11 && 0.0553\\	
+			Non-vegetated && 8 && 0.533\\
+			\bottomrule[0.25mm]
+		\end{tabular}
+	\end{threeparttable}
+\end{table}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[trim={1.2cm 1.2cm 1.2cm 1.2cm},clip, width = 13cm]{DS_Project_Points_Map_3}
+	\caption{Map of georeferenced points (red) measured during field data collection; box on top right corner represents the extents of the image compared to Dharamshala Tehsil}\label{fig13}
+\end{figure}
+
+\vspace{-10pt}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[trim={1.2cm 1.2cm 1.2cm 1.2cm},clip, width = 13cm]{DS_Project_Polygons_Map_3}
+	\caption{Map of vegetation class polygons; created and cross-verified in Google Earth Pro; box on top right corner represents the extents of the image compared to Dharamshala Tehsil}\label{fig14}
+\end{figure}
+
+\clearpage
+
+\subsection{Vegetation Cover Classification}
+
+\subsubsection{Random Forests Algorithm}
+
+\justify
+Through the analysis of the random forests algorithm and its effective application in remote-sensing applications, we concluded that the random forests algorithm would be a good candidate for conducting supervised classification of our pre-processed remote-sensing data inventory based on our field data inventory. Before conducting the actual classification, we would first need to "clean" some of our data in order to prepare it for processing in the random forests algorithm. Firstly, as mentioned in the previous paragraphs; the random forests algorithm performs well generally on balanced data and tends to wrongly classify minority datasets. As shown in Table \ref{table12}, we can approximate the geographical areas of coniferous forests, broad-leaved forests and non-vegetated areas to be equal since their combined standard deviation is less than 20$\%$ of their combined mean. On the other hand, the geographical areas of mixed forests, grassland, shrubs and cropland are significantly smaller than those of the aforementioned classes. In this sense, mixed forests, grassland, shrubs and croplands form minority classes in the analysis and may be subject to misclassification by the random forests algorithm.
+
+\justify
+In order to overcome this limitation of imbalanced data, we firstly decided to eliminate the mixed forest category altogether. Even though these forest types were cited as relevant in literature; we were only able to locate 1 polygon during our field study. In order to prevent the imbalance of training data, we concluded it would be best to eliminate this category as it is unlikely to be significant in the study area. After doing so, we still had cropland, shrubs and grassland as minority classes. In light of this, we concluded that grassland, shrubs and cropland show similar characteristics of being generally less vegetated than forests. As a result, we assumed this to be a common characteristic between these vegetation types and we combined them into one single category consisting of cropland, shrubs and grassland. Table \ref{table13} shows the revised field data inventory which would be relevant for the random forests algorithm. With the revised vegetation classes, the combined standard deviation of the geographical areas is less than 15$\%$ of their combined mean. We concluded that these revised vegetation polygons were sufficiently similar, in terms of geographical area, for us to start the random forests algorithm.
+
+\begin{table}[H]
+	\centering
+	\small
+	\def\arraystretch{1.6}
+	\begin{threeparttable}
+		\caption{Summary of revised vegetation classes relevant to the random forests algorithm}
+		\label{table13}
+		\begin{tabular}{L{4.2cm} L{1cm} L{3.5cm} L{1cm} L{4cm}}
+			\toprule[0.25mm]
+			Vegetation Class && Number of Polygons && Geographical Area (km$^2$)\\
+			\midrule[0.35mm]
+			Coniferous forests && 18 && 0.451 \\
+			Broad-leaved forests && 27 && 0.645 \\
+			Cropland, shrubs and grassland && 35 && 0.555\\
+			Non-vegetated && 8 && 0.533\\
+			\bottomrule[0.25mm]
+		\end{tabular}
+	\end{threeparttable}
+\end{table}
+
+\justify
+With this, we were able to conclude that the four new revised vegetation classes will be coniferous forests, broad-leaved forests, cropland, shrubs and grassland, and non-vegetated areas. For analysis in later segments of this study, these classes were assigned the natural numbers 1, 2, 3 and 4 respectively. From class 1 to 2, which represent coniferous and broad-leaved forests respectively; the general vegetation cover of these classes is the same since both classes represent forests. However from classes 2 to 4, which represent broad-leaved forests, cropland, shrubs and grassland, and non-vegetated areas; the vegetation cover of the classes reduces significantly as the class number increases. This concept is illustrated below in Figure \ref{fig16}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[trim={4cm 14cm 4cm 13cm},clip, width = 15cm]{DS_Project_ColorRamp_Plot_2}
+	\caption{Defined ordinal scale of vegetation classes }\label{fig16}
+\end{figure}
+
+\justify
+Technically, the random forests algorithm does not require the vegetation classes to be assembled in such an ordinal manner. However, because some of the vegetation classes have intrinsically more vegetation cover than the others; it would make sense to order them in such an ordinal manner. This might assist us in setting up a more meaningful relationship between the classes. This ordinal arrangement will come into importance later when we investigate changes in the derived vegetation cover. In this sense, this ordinal arrangement is not an end in itself; rather a means to an end.
+
+\subsubsection{Methodologies}
+
+\justify
+With the vegetation classes now labeled and ordered, we then started with the random forests algorithm. The exact tasks that we followed are summarized in a simplified flowchart in Figure \ref{fig17}. The random forests algorithm was run using R version 3.4.3 under the RStudio Integrated Development Environment (IDE); with the utility of the Comprehensive R Archive Network (\ac{cran}) "raster", "rgdal", "caret" and "snow" packages. The corresponding detailed flowchart and code used in R can be found in Appendix \hyperref[app2]{3}. The code used for the random forests algorithm was inspired and adapted by the work of Ali Santacruz, PhD candidate in the Geography program at Clark University (MA, USA).
+
+\justify
+Firstly, the above-stated CRAN packages were imported into R-Studio, followed by the 26 Landsat 8 SR images and the shape file for the vegetation polygons. After the import of these files, sampling operations were conducted on the data. Firstly, the 7-band values of pixels were extracted for pixels coinciding with the polygons of vegetation classes. These 7-band values were then sub-sampled into 2 datasets; namely a training and test dataset in a 70-30 ratio respectively. An under-sampling procedure was randomly conducted on the training dataset to make the number of pixels for each class the same as the lowest number recorded for any class. This ensured the training dataset was completely balanced before implementing the random forests algorithm.
+
+\justify
+Once a balanced training dataset was created, the random forests algorithm was run on the training dataset to create a trained random forests model. The number of trees was set to 1000 and the algorithm was set to optimize for the best selection of the $m$ variable. The out-of-bag error estimates were recorded after running the algorithm. Next, the trained random forests model was independently tested on the test dataset. Results were tallied in a confusion matrix and the corresponding overall accuracy, Kappa coefficient and producer's accuracy by class were recorded. Finally, the model was used to predict the entire image corresponding to the study area. The resulting classification image was then exported and the algorithm was then repeated in the same manner for the remaining images.
+
+\vspace{5pt}
+\begin{figure}[H]
+	\centering
+	\footnotesize
+	\begin{tikzpicture}[auto,
+	block_center/.style ={rectangle, draw=black, thick, fill=white,
+		text width=10em, text centered,
+		minimum height=4em},
+	block_left/.style ={rectangle, draw=black, thick, fill=white,
+		text width=16em, text ragged, minimum height=4em, inner sep=6pt},
+	block_noborder/.style ={rectangle, draw=none, thick, fill=none,
+		text width=18em, text centered, minimum height=1em},
+	block_assign/.style ={rectangle, draw=black, thick, fill=white,
+		text width=18em, text ragged, minimum height=3em, inner sep=6pt},
+	block_assign2/.style ={rectangle, draw=black, thick, fill=white,
+		text width=10em, text ragged, minimum height=3em, inner sep=6pt},
+	block_lost/.style ={rectangle, draw=black, thick, fill=white,
+		text width=16em, text ragged, minimum height=3em, inner sep=6pt},
+	line/.style ={draw, thick, -latex', shorten >=0pt}
+	]
+	% outlining the flowchart using the PGF/TikZ matrix funtion
+	\matrix [column sep=35mm,row sep=9mm] {
+		% enrollment - row 1
+		\node [block_left] (landsat8import) {Import: \\[0.2cm]
+		1. CRAN "rgdal", "raster", "snow" and "caret" packages.\\[0.1cm]
+		2. Pre-processed 26 images \\[0.1cm]
+ 	    3. Shape file for vegetation class polygons.};
+		% Apply for loop here to show with special arrows, for each image specifically
+		& \node [block_left] (landsat8clear) {Apply operations: \\[0.2cm]
+			1. Extract band values for pixels intersecting vegetation class polygons. \\[0.1cm]
+			2. Partition into training and test datasets with 70-30 ratio. \\[0.1cm]
+			3. Conduct undersampling on training dataset.}; \\
+		&\node [block_left] (landsat8hillshade) {Train random forests algorithm with number of trees = 1000}; \\
+		&\node [block_left] (landsat8export) {Validate random forests model on test dataset.}; \\
+		&\node [block_left] (landsat8next) {Use trained random forests model to predict image corresponding to study area.}; \\\\[-0.3cm]
+		&\node [block_center] (landsat8final) {Export resulting classification image.}; \\
+	};
+	% end matrix
+	% connecting nodes with paths
+	\begin{scope}[every path/.style=line]
+	% paths for enrollemnt rows
+	\path (landsat8import) -- node [text width=2.5cm,midway,above=0.5em,align=center] {For each image from $i=1$ to $i=26$; $i\in \mathbb{N}$} (landsat8clear);
+	\path (landsat8import) -- coordinate[midway](m) (landsat8clear);
+	\path (landsat8clear) -- (landsat8hillshade);
+	\path (landsat8hillshade) -- (landsat8export);
+	\path (landsat8export) -- (landsat8next);
+	\path (landsat8next) -- coordinate[midway](k) (landsat8final);
+%	\path (landsat8next) |- ($(landsat8next.south west) + (-1.78,-0.7)$) |- +(0,10cm) ;
+	\end{scope}
+	\path (k) + (-4.6cm, 0cm) coordinate (B);
+	\draw[thick] (k) |- (B);
+	\draw[-latex', shorten >= -2.5pt, thick] (B) |-  +(0cm, 9.25cm) node [pos=0.25, left = 0.2cm] {Iterate};
+%	\draw[thick] (k) |- \coordinate(s) +(-4.6cm, 0);
+%	\draw[line] (0,0) |- +(-4.6cm, 13.98cm);
+	\end{tikzpicture}
+	\vspace{5pt}
+	\caption{Simplified flowchart for vegetation cover classification methodology}\label{fig17}
+\end{figure}
+
+\subsection{Vegetation Cover Loss Analysis}
+
+\subsubsection{Data Groups}
+
+\justify
+The random forests algorithm produced 26 vegetation cover classification images corresponding to the 26 Landsat 8 SR satellite images. In order to conduct meaningful statistical analyses on the annual vegetation cover trend and to minimize statistical noise, these 26 classification images were grouped into 4 groups; corresponding to the years in which the satellite images were taken. The aforementioned groups of these images can be seen below in Table \ref{table14}.
+
+\justify
+The groups were made such that each group contained images from summer until winter of a particular year and possibly of the subsequent year. The group name is defined by the predominant year mark of its images. In some cases, images from summer were not available; so images from the south-west monsoon were instead used as a starting point. This can be seen in the 2014 group. In other situations, images from winter were limited; so images of the next year's early winter were classified under the group of the previous year. Such cases can be seen in the 2014 and 2015 groups. The final 2017 image was attached to the 2016 group because it was the final image remaining and it would be useful to augment the 2016 group since it had a limited number of images compared to other groups. Even though this image has a summer tag, it could still bear some resemblance to a winter image since it corresponds to the transition period between winter and summer; that is the beginning of March.
+
+\begin{ThreePartTable}
+	\centering
+	\small
+	\def\arraystretch{1.3}
+	\begin{longtable}{L{2.3cm} L{4.2cm} L{3.1cm} L{4.5cm}}
+		\caption{Summary of groupings of vegetation cover classification images}
+		\hskip15pt	
+		\label{table14}\\
+		\toprule[0.25mm]\\[-0.5cm]
+		Group & Landsat Image ID & Date Acquired ~~~~~~~~~~(yy/mm/dd) & Seasonal Classification \\\\[-0.5cm]
+		\midrule[0.35mm]\\[-0.4cm]
+		2013 & LC81470382013108 & 2013-04-19 & Summer\\  
+		(N = 6) & LC81470382013140 & 2013-05-21 & Summer\\
+		& LC81470382013156 & 2013-06-06 & South-West Monsoon \\
+		& LC81470382013268 & 2013-09-26 & South-West Monsoon \\
+		& LC81470382013316 & 2013-11-13 & Post-Monsoon\\
+		& LC81470382013332 & 2013-11-29 & Post-Monsoon \\\\[-0.3cm]
+		2014& LC81470382014159 & 2014-06-09 & South-West Monsoon \\
+		(N = 8)& LC81470382014191 & 2014-07-11 & South-West Monsoon  \\
+		& LC81470382014239 & 2014-08-28 & South-West Monsoon \\
+		& LC81470382014303 & 2014-10-31 & Post-Monsoon\\
+		& LC81470382014319 & 2014-11-16 & Post-Monsoon \\
+		& LC81470382014335 & 2014-12-02 & Winter \\
+		& LC81470382014351 & 2014-12-18 & Winter \\
+		& LC81470382015018 & 2015-01-19 & Winter \\\\[-0.3cm]
+		2015& LC81470382015082 & 2015-03-24 & Summer \\
+		(N = 7)& LC81470382015114 & 2015-04-25 & Summer \\
+		& LC81470382015178 & 2015-06-28 & South-West Monsoon \\
+		& LC81470382015274 & 2015-10-02 & Post-Monsoon \\
+		& LC81470382015290 & 2015-10-18 & Post-Monsoon \\
+		& LC81470382015322 & 2015-11-19 & Post-Monsoon \\
+		& LC81470382016005 & 2016-01-06 & Winter \\ \\[-0.3cm]
+		2016& LC81470382016117 & 2016-04-27 & Summer \\
+		(N = 5)& LC81470382016133 & 2016-05-13 & Summer \\
+		& LC81470382016293 & 2016-10-20 & Post-Monsoon \\
+		& LC81470382016357 & 2016-12-23 & Winter \\
+		& LC81470382017071 & 2017-03-13 & Summer \\\\[-0.4cm]
+		\bottomrule[0.25mm]
+	\end{longtable}
+\end{ThreePartTable}
+
+\justify
+With the creation of these 4 groups based on the years when the satellite images were taken, we are able to proceed to the next task of analyzing the changes of the vegetation cover from 2013 to 2017. In order to proceed with this task, we would have to compare the vegetation cover classification images between the various groups and to evaluate whether the observed changes in vegetation classes correspond to significant increases or decreases in the vegetation class number. In our case, since we are interested in identifying regions experiencing a loss of vegetation, we would be more interested in finding regions in which the vegetation class number showed a significant increase over time. 
+
+\justify
+In order to proceed with this task, we considered the datasets at hand under the framework of with the decision tree in Figure \ref{fig18}; which represents various statistical tests for different kinds of data, derived from \citet{nayak2011}. Our vegetation cover classification data represents ordinal data which is likely to be nonparametric due to a lack of a clear statistical distribution; such as a normal distribution. As a result, we employed the Mann-Whitney $U$ Test. 
+
+\subsubsection{Methodologies}
+
+\justify
+With the data groups and Mann-Whitney $U$ test set up, we then proceeded with analyzing the 26 vegetation cover images for significant increases in vegetation class number over time. For this, we once again used R version 3.4.3 and the RStudio IDE; with the CRAN packages "rgdal", "raster", "MASS" and "igraph". Figure \ref{fig19} below shows a simplified flowchart of operations implemented in the vegetation cover loss analysis. The corresponding detailed flowchart and R code can be found in Appendix \hyperref[app3]{4}. 
+
+\justify
+Firstly, we imported the aforementioned CRAN packages and 26 vegetation classification images into R-Studio. A pixel stack is defined as a vertical column of pixels which represents the same spatial position but different temporal positions based on the different images. All pixel stacks were firstly assessed and pixel stacks containing less than 13 out of 26 pixels per stack were eliminated from the analysis. This was done to ensure sufficient representative data for analysis. With this, the medians of all remaining pixel stacks were calculated to produce the overall median vegetation classification image from years 2013 to 2017. This was done for us to have a visualization of the long-term vegetation classification of the study area.
+
+\justify
+With the creation of the overall median image, we now proceeded to analyze the vegetation classification images via their groups. The vegetation classification images were freshly re-imported into R-Studio; this time grouped into the 2013, 2014, 2015 and 2016 groups as discussed earlier. For simplicity, these groups were renamed to 1, 2, 3 and 4 respectively. Using the variable $k \in \mathbb{N}$ ranging from 1 to 3, the $k$th and $(k+1)th$ groups were imported pair-wise for analysis. Pixel stacks in the $k$th and $(k+1)$th groups were analyzed separately and pixel stacks which possessed No-Data (\ac{na}) values for more than half of their stack lengths were eliminated from the entire group-pair to prevent imbalanced data contamination. 
+
+\justify
+Next, with the remaining pixel stacks in the $k$th and $(k+1)$th groups, the median images for both $k$th and $(k+1)$th groups were calculated. The median image of the $k$th group was subtracted from that of the $(k+1)$th group in order to find the median difference image. Median difference pixels showing values greater than or equal to 1 were extracted for further analysis. This was done to narrow down the search space for the upcoming Mann-Whitney $U$ test, since these pixels were the most likely to have shown a net increase in vegetation class number. 
+
+\justify
+Next, with the resulting median difference image; pixel stacks which had a median value of 2 in the $(k+1)$th median image were eliminated from analysis. This was done to avoid the analysis of pixels which showed a vegetation class number increase from 1 to 2; since this type of an increase does not necessarily represent a loss in vegetation cover and could have simply come into being due to stochastic processes within the random forests model or because of some inherent lack of classification potential within the datasets.  
+
+\begin{figure}[H]
+	\centering
+	\footnotesize
+	\begin{tikzpicture}[auto,
+	block_center/.style ={rectangle, draw=black, thick, fill=white,
+		text width=10em, text centered,
+		minimum height=4em},
+	block_left/.style ={rectangle, draw=black, thick, fill=white,
+		text width=16em, text ragged, minimum height=4em, inner sep=6pt},
+	block_noborder/.style ={rectangle, draw=none, thick, fill=none,
+		text width=18em, text centered, minimum height=1em},
+	block_assign/.style ={rectangle, draw=black, thick, fill=white,
+		text width=18em, text ragged, minimum height=3em, inner sep=6pt},
+	block_assign2/.style ={rectangle, draw=black, thick, fill=white,
+		text width=10em, text ragged, minimum height=3em, inner sep=6pt},
+	block_lost/.style ={rectangle, draw=black, thick, fill=white,
+		text width=16em, text ragged, minimum height=3em, inner sep=6pt},
+	line/.style ={draw, thick, -latex', shorten >=0pt}
+	]
+	% outlining the flowchart using the PGF/TikZ matrix funtion
+	\matrix [column sep=35mm,row sep=9mm] {
+		% enrollment - row 1
+		\node [block_left] (landsat8import) {
+			Import: \\[0.2cm]
+			1. CRAN "rgdal", "raster", "MASS" and "igraph" packages.\\[0.1cm]
+			2. Grouped vegetation cover classification images. Rename groups from 2013, 2014, 2015 and 2016 to 1, 2, 3 and 4. \\[0.3cm]
+			Apply operations: \\[0.2cm]
+			1. Remove stacks of pixels if they contain less than half of pixels for entire time period. \\[0.1cm]
+			2. Calculate overall median vegetation classification image.};
+		% Apply for loop here to show with special arrows, for each image specifically
+		& \node [block_left] (landsat8clear) {Apply operations: \\[0.2cm]
+			1. Import $k$th and $(k+1)$th data groups. \\[0.1cm]
+			2. Remove pixel stacks in group-pair if more than half of pixels have NA values. \\[0.1cm]
+			3. Calculate median vegetation classification images for $k$th and $(k+1)$th groups.\\[0.1cm]
+		    4. Calculate median difference image by subtracting the $k$th from the $(k+1)$th data group median. \\[0.1cm]
+	        5. Retain pixel stacks where median difference $\geq$1.}; \\[-0.3cm]
+		&\node [block_left] (landsat8hillshade) {Apply operations:\\[0.2cm]
+		1. Remove pixels stacks with median value 2 in the $(k+1)$th data group. \\[0.1cm]
+		2. Apply one-tailed Mann-Whitney $U$ test on remaining pixels stacks. \\[0.1cm]
+	    3. Retain pixel stacks with p-value $\leq$ 0.05}; \\\\[-0.3cm]
+		&\node [block_left] (landsat8final) {Apply operations:\\[0.3cm]
+		1. Export flagged pixels. Let these be known as "raw" flagged pixels.\\[0.1cm]
+		2. Clump raw pixels. Let these pixels be known as "clump" flagged pixels.};\\
+	};
+	% end matrix
+	% connecting nodes with paths
+	\begin{scope}[every path/.style=line]
+	% paths for enrollemnt rows
+	\path (landsat8import) -- node [text width=2.5cm,midway,above=0.5em,align=center] {For variables from $k=1$ to $k=3$; $k \in \mathbb{N}$} (landsat8clear);
+	\path (landsat8import) -- coordinate[midway](m) (landsat8clear);
+	\path (landsat8clear) -- (landsat8hillshade);
+	\path (landsat8hillshade) -- coordinate[midway](k) (landsat8final);
+	%	\path (landsat8next) |- ($(landsat8next.south west) + (-1.78,-0.7)$) |- +(0,10cm) ;
+	\end{scope}
+	\path (k) + (-4.6cm, 0cm) coordinate (B);
+	\draw[thick] (k) |- (B);
+	\draw[-latex', shorten >= -2.5pt, thick] (B) |- +(0cm, 8.25cm) node [pos=0.2, left = 0.18cm] {Iterate};
+	%	\draw[thick] (k) |- \coordinate(s) +(-4.6cm, 0);
+	%	\draw[line] (0,0) |- +(-4.6cm, 13.98cm);
+	\end{tikzpicture}
+	\vspace{5pt}
+	\caption{Simplified flowchart for vegetation cover loss analysis}\label{fig19}
+\end{figure}
+
+\justify
+The remaining pixel stacks were probable candidates for vegetation loss and these pixel stacks were then analyzed using the one-tailed Mann-Whitney $U$ test; with an alternative hypothesis of a significant increase in vegetation class number from the $k$th to the $(k+1)$th group. The pixel stacks which had p-values less than or equal to 0.05 fell under the alternative hypothesis and were extracted as successfully identified candidates for vegetation loss between the $k$th and $(k+1)$th groups. Naturally, we could have simply run the Mann-Whitney $U$ test for the entire $k$th and $(k+1)$th groups; however, this would have been significantly more computationally expensive and time-consuming. This is why we narrowed down the search space by identifying pixel stacks which showed a median difference of greater than or equal to 1 between the $k$th and $(k+1)$th groups.
+
+\justify
+The aforementioned process was repeated for following values of $k$ until all the group-pairs were successfully analyzed. The resulting pixel candidates for vegetation loss were exported and labeled as "raw" pixels. These raw pixels were later mosaiced together to get a sum of raw pixels for the period from 2013-2017. 
+
+\justify
+For further analysis, each set of flagged raw pixels between the $k$th and $(k+1)$th groups were spatially filtered under a 8-directional spatial clump criterion. This would mean that pixels were only selected if they occurred at least in pairs spatially adjacent to each other in all possible 2-dimensional grid-spatial directions. This was meant to eliminate any "lone" pixels in the flagged raw pixels. These pixels were labeled as "clump" pixels. The resulting clump pixels were then mosaiced together to form a sum of clump pixels for the period of 2013-2017. 
+
+\subsection{Summary of Software/Tools Utilized}
+
+\justify
+Table \ref{tableSoftware} below summarizes the software/tools used in the methodologies of this study. Certain specifications of each software/tool are mentioned as additional details.
+
+\begin{table}[H]
+	\centering
+	\small
+	\def\arraystretch{1.6}
+	\begin{threeparttable}
+		\caption{Summary of software/tools utilized}
+		\label{tableSoftware}
+		\begin{tabular}{L{5cm} L{0.5cm} L{3cm} L{0.5cm} L{4.5cm}}
+			\toprule[0.25mm]
+			Methodology/Task && Software/Tools && Details\\
+			\midrule[0.35mm]
+			Pre-Processing Remote Sensing Data && Google Earth ~~~~~~~~~Engine API (JavaScript) && Landsat 8 SR ImageCollection was filtered to retrieve specific images\\[0.15cm]
+			Field Data Acquisition && Google Earth Pro, ArcMap version 10.3.1 && Softwares were used to verify measured GPS coordinates and to draw polygons for vegetation classes\\
+			Vegetation Cover Classification && R version 3.4.3, RStudio IDE version 1.0.143, ArcMap version 10.3.1 && Random forests model was run within the R environment for vegetation cover classification. CRAN packages used: "raster", "rgdal", "caret" and "snow"\\
+			Vegetation Cover Loss Analysis && R version 3.4.3, RStudio IDE version 1.0.143, ArcMap version 10.3.1 && Vegetation cover loss analysis was conducted within the R environment. CRAN packages used: "raster", "rgdal", "MASS" and "igraph"\\
+			General Visualization && R version 3.4.3, RStudio IDE version 1.0.143, ArcMap version 10.3.1 && Original visualizations in this study were created within the R environment and with ArcMap. CRAN packages used: "graphics", "lattice", "rasterVis" and "latticeExtra" \\
+			\bottomrule[0.25mm]
+		\end{tabular}
+	\end{threeparttable}
+\end{table}
+
+% Old data: 
+
+% Under the second tier of the final analysis, the flagged pixels were mosaiced together without spatial clumping. After mosaicing, the pixels were then filtered under a 8-directional spatial clump criterion. This has an advantage of identifying change pixels that were not only adjacent to each other in space; but also in time. This dataset was referred to as "Sum then Clump". These two final datasets were then exported as combined vegetation loss datasets from years 2013 to 2017. In the next sections, we compared the flagged pixels with sharp RGB satellite imagery to verify if the flagged pixels represent real losses in vegetation cover.
+
+%\begin{figure}[H]
+%	\centering
+%	\includegraphics[trim={1.2cm 3cm 1.2cm 5cm},clip,width = 15cm]{Cairo_PNG_72_dpi2}
+%	\caption{Overview of the 5 defective images which were not detected by pre-processing filters}\label{fig15}
+%\end{figure}
+%\vspace{-0.4cm

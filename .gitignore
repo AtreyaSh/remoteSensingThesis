@@ -1,0 +1,14 @@
+# all tex related builds
+*.aux
+*.bbl
+*.blg
+*.equ
+*.lof
+*.log
+*.lot
+*.out
+*.gz
+*.toc
+*.swp
+_minted-Thesis_Manuscript/
+img/

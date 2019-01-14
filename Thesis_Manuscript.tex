@@ -1,0 +1,408 @@
+\documentclass[a4paper,11pt]{article}
+\usepackage{amsfonts,amssymb,amsmath}
+\usepackage{mathtools}
+\usepackage[utf8]{inputenc}
+\usepackage{epsfig}
+\usepackage{colordvi}
+\usepackage{eurosym}
+\usepackage{vmargin}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+\usepackage{lipsum}
+\usepackage{graphicx}
+\usepackage{subfig}
+\usepackage{caption}
+\usepackage{array}
+\usepackage{threeparttable}
+\usepackage{booktabs}
+\usepackage{float}
+\usepackage{tabulary}
+\usepackage{ragged2e}
+\usepackage{url}
+\usepackage{longtable}
+\usepackage[toc,page]{appendix}
+\usepackage{multirow}
+\usepackage{threeparttablex}
+\usepackage{tikz}
+\usepackage{pdfpages}
+\usepackage{minted}
+
+\usepackage{acro}
+\usepackage{enumitem}
+\newlist{acronyms}{description}{1}
+\setlist[acronyms]{
+	labelwidth = 6em,
+	leftmargin = 6.5em,
+	noitemsep,
+	itemindent = 0pt}
+\DeclareAcroListStyle{mystyle}{list}{ list = acronyms }
+\acsetup{first-style=short, list-style=mystyle}
+
+\usetikzlibrary{shapes,arrows,calc,positioning, decorations.markings}
+\graphicspath{{./img/}}
+
+\usepackage[sort, semicolon]{natbib}
+\bibliographystyle{apalike}
+\setlength{\bibsep}{4pt}
+
+\usepackage[subfigure, titles]{tocloft}
+\tocloftpagestyle{fancy}
+
+\newlength{\mylen}
+
+\renewcommand{\cftfigpresnum}{\figurename\enspace}
+\renewcommand{\cftfigaftersnum}{:}
+\settowidth{\mylen}{\cftfigpresnum\cftfigaftersnum}
+\addtolength{\cftfignumwidth}{40pt}
+\setlength{\cftfigindent}{0pt}
+
+\renewcommand{\cfttabpresnum}{\tablename\enspace}
+\renewcommand{\cfttabaftersnum}{:}
+\settowidth{\mylen}{\cfttabpresnum\cfttabaftersnum}
+\addtolength{\cfttabnumwidth}{40pt}
+\setlength{\cfttabindent}{0pt}
+
+\usepackage[colorlinks = true, citecolor = black, urlcolor = blue, linkcolor = black, anchorcolor = black]{hyperref}
+
+\setmarginsrb{2.5cm}{1.5cm}{2.5cm}{1.5cm}{1.3cm}{0.65cm}{00mm}{25pt}
+
+\captionsetup[figure]{font=footnotesize,labelfont=footnotesize,labelfont={bf},labelformat={default},labelsep=period,name={Fig.}, justification=centering,singlelinecheck=false, width = 15cm}
+
+\captionsetup[table]{font=footnotesize,labelfont=footnotesize,labelfont={bf},labelformat={default},labelsep=period,name={Table}, justification=raggedright,singlelinecheck=false, width = 15cm}
+
+\newcolumntype{L}[1]{>{\RaggedRight\hspace{0pt}}p{#1}}
+\newcolumntype{R}[1]{>{\RaggedLeft\hspace{0pt}}p{#1}}
+
+\newcommand*{\h}{\hspace{5pt}}% for indentation
+\newcommand*{\hh}{\h\h}% double indentation
+
+\newcommand{\myfrac}[3][0pt]{\genfrac{}{}{}{0}{\raisebox{#1}{$#2$}}{\raisebox{-#1}{$#3$}}}
+
+\renewcommand{\contentsname}{Table of Contents}
+
+\pagestyle{fancy}
+\renewcommand{\sectionmark}[1]{\markboth{}{#1}}
+
+% For subsection header:
+%\pagestyle{fancy}
+%\renewcommand{\sectionmark}[1]{\markboth{}{}}
+%\renewcommand{\subsectionmark}[1]{\markboth{}{#1}}
+
+\fancypagestyle{custom}{
+\fancyhf{}
+\fancyhead[L]{\normalsize\rightmark}
+\fancyhead[R]{\normalsize\thepage}
+\setlength{\parskip}{1mm}
+%\fancyhead[L]{\bfseries Remote-Sensing Approach to Spatio-Temporal Analysis of Vegetation Cover in Dharamshala Tehsil, Indian Western Himalayas \rm \vspace{2pt}}
+%\fancyfoot[R]{\thepage\ of \pageref{LastPage}}
+}
+
+\fancypagestyle{blank}{
+	\fancyhf{}	
+	\fancyhead[R]{\normalsize\thepage}
+	\setlength{\parskip}{1mm}}
+
+\fancypagestyle{blank2}{
+	\fancyhf{}	
+	\setlength{\parskip}{1mm}}
+
+% Change first page of each new section to be blank style
+\let\stdsection\section
+\renewcommand\section{\thispagestyle{blank}\stdsection}
+
+\makeatletter
+\newcommand*{\ovA}[1]{%
+	$\m@th\overline{\mbox{#1}\raisebox{3mm}{}}$%
+}
+\newcommand*{\ovB}[1]{%
+	$\m@th\overline{\mbox{#1}\raisebox{2.5mm}{}}$%
+}
+\makeatother
+
+\defcitealias{NSC1999}{\citealp{NSC1999}}
+\defcitealias{Parvaiz2016}{\citealp{Parvaiz2016}}
+\defcitealias{CPI2010}{\citealp{CPI2010}}
+\defcitealias{Singh2012}{\citealp{Singh2012}}
+\defcitealias{landsat2006}{\citealp{landsat2006}}
+\defcitealias{landsat2016}{\citealp{landsat2016}}
+\defcitealias{HDR2009}{PDHP, 2009}
+\defcitealias{DCH2011}{DCO, 2011}
+\defcitealias{IMD2000}{IMD, 2000}
+\defcitealias{HP2012}{DEST, 2012}
+\defcitealias{HP2013}{HPFD, 2013}
+\defcitealias{HPB2008}{HPSBB, 2008}
+\defcitealias{SOER2009}{DEST, 2009}
+\defcitealias{HP2015}{HPFD, 2015}
+\defcitealias{crisp2001}{CRISP, 2001}
+\defcitealias{HPT2013}{ACN, 2013}
+\defcitealias{sentinel2015}{ESA, 2015}
+
+\DeclareAcronym{de}{
+	short = {DEST} ,
+	long  = {Department of Environment, Science and Technology} ,
+	class = {abbrev}
+}
+\DeclareAcronym{gis}{
+	short = {GIS} ,
+	long  = {Geographic Information System} ,
+	class = {abbrev}
+}
+\DeclareAcronym{isro}{
+	short = {ISRO} ,
+	long  = {Indian Space Research Organization} ,
+	class = {abbrev}
+}
+\DeclareAcronym{lulc}{
+	short = {LULC} ,
+	long  = {Land Use Land Cover} ,
+	class = {abbrev}
+}
+\DeclareAcronym{ocm}{
+	short = {OCM} ,
+	long  = {Ocean Color Monitor} ,
+	class = {abbrev}
+}
+\DeclareAcronym{hp}{
+	short = {HPFD} ,
+	long  = {Himachal Pradesh Forest Department} ,
+	class = {abbrev}
+}
+\DeclareAcronym{usgs}{
+	short = {USGS} ,
+	long  = {United States Geological Survey} ,
+	class = {abbrev}
+}
+\DeclareAcronym{nasa}{
+	short = {NASA} ,
+	long  = {National Aeronautics and Space Administration} ,
+	class = {abbrev}
+}
+\DeclareAcronym{noaa}{
+	short = {NOAA} ,
+	long  = {National Oceanic and Atmospheric Administration} ,
+	class = {abbrev}
+}
+\DeclareAcronym{modis}{
+	short = {MODIS} ,
+	long  = {Moderate Resolution Imaging Spectroradiometer} ,
+	class = {abbrev}
+}
+\DeclareAcronym{avhrr}{
+	short = {AVHRR} ,
+	long  = {Advanced Very-High Resolution Radiometer} ,
+	class = {abbrev}
+}
+\DeclareAcronym{glcf}{
+	short = {GLCF} ,
+	long  = {Global Land Cover Facility} ,
+	class = {abbrev}
+}
+\DeclareAcronym{emr}{
+	short = {EMR} ,
+	long  = {Electromagnetic Radiation} ,
+	class = {abbrev}
+}
+\DeclareAcronym{vis}{
+	short = {VIS} ,
+	long  = {Visible} ,
+	class = {abbrev}
+}
+\DeclareAcronym{nir}{
+	short = {NIR} ,
+	long  = {Near-Infrared} ,
+	class = {abbrev}
+}
+\DeclareAcronym{swir}{
+	short = {SWIR} ,
+	long  = {Short-Wave Infrared} ,
+	class = {abbrev}
+}
+\DeclareAcronym{gcp}{
+	short = {GCP} ,
+	long  = {Ground Control Point} ,
+	class = {abbrev}
+}
+\DeclareAcronym{qa}{
+	short = {QA} ,
+	long  = {Quality Assessment} ,
+	class = {abbrev}
+}
+\DeclareAcronym{sr}{
+	short = {SR} ,
+	long  = {Surace-Reflectance} ,
+	class = {abbrev}
+}
+\DeclareAcronym{esa}{
+	short = {ESA} ,
+	long  = {European Space Agency} ,
+	class = {abbrev}
+}
+\DeclareAcronym{boa}{
+	short = {BOA} ,
+	long  = {Bottom of Atmosphere} ,
+	class = {abbrev}
+}
+\DeclareAcronym{scm}{
+	short = {SCM} ,
+	long  = {Scene Classification Map} ,
+	class = {abbrev}
+}
+\DeclareAcronym{cta}{
+	short = {CTA} ,
+	long  = {Central Tibetan Administration} ,
+	class = {abbrev}
+}
+\DeclareAcronym{gadm}{
+	short = {GADM} ,
+	long  = {Global Administrative Areas} ,
+	class = {abbrev}
+}
+\DeclareAcronym{ee}{
+	short = {EE} ,
+	long  = {Earth Explorer} ,
+	class = {abbrev}
+}
+\DeclareAcronym{gee}{
+	short = {GEE} ,
+	long  = {Google Earth Engine} ,
+	class = {abbrev}
+}
+\DeclareAcronym{ide}{
+	short = {IDE} ,
+	long  = {Integrated Development Environment} ,
+	class = {abbrev}
+}
+\DeclareAcronym{api}{
+	short = {API} ,
+	long  = {Application Programming Interface} ,
+	class = {abbrev}
+}
+\DeclareAcronym{srtm}{
+	short = {SRTM} ,
+	long  = {Shuttle Radar Topography Mission} ,
+	class = {abbrev}
+}
+\DeclareAcronym{dem}{
+	short = {DEM} ,
+	long  = {Digital Elevation Model} ,
+	class = {abbrev}
+}
+\DeclareAcronym{wrs}{
+	short = {WRS} ,
+	long  = {Worldwide Reference System} ,
+	class = {abbrev}
+}
+\DeclareAcronym{crs}{
+	short = {CRS} ,
+	long  = {Coordinate Reference System} ,
+	class = {abbrev}
+}
+\DeclareAcronym{wgs84}{
+	short = {WGS84} ,
+	long  = {World Geodetic System 1984} ,
+	class = {abbrev}
+}
+\DeclareAcronym{gps}{
+	short = {GPS} ,
+	long  = {Global Positioning System} ,
+	class = {abbrev}
+}
+\DeclareAcronym{utm}{
+	short = {UTM} ,
+	long  = {Universal Transverse Mercator} ,
+	class = {abbrev}
+}
+\DeclareAcronym{cran}{
+	short = {CRAN} ,
+	long  = {Comprehensive R Archive Network} ,
+	class = {abbrev}
+}
+\DeclareAcronym{na}{
+	short = {NA} ,
+	long  = {No-Data} ,
+	class = {abbrev}
+}
+\DeclareAcronym{rgb}{
+	short = {RGB} ,
+	long  = {Red-Green-Blue} ,
+	class = {abbrev}
+}
+\DeclareAcronym{id}{
+	short = {ID} ,
+	long  = {Identification} ,
+	class = {abbrev}
+}
+\DeclareAcronym{usa}{
+	short = {USA} ,
+	long  = {United States of America} ,
+	class = {abbrev}
+}
+\DeclareAcronym{sisdp}{
+	short = {SIS-DP} ,
+	long  = {Space Based Information Support for Decentralized Planning} ,
+	class = {abbrev}
+}
+\DeclareAcronym{amsl}{
+	short = {a.m.s.l} ,
+	long  = {Above Mean Sea-Level} ,
+	class = {abbrev}
+}
+\DeclareAcronym{ram}{
+	short = {RAM} ,
+	long  = {Random-Access Memory} ,
+	class = {abbrev}
+}
+\DeclareAcronym{cpu}{
+	short = {CPU} ,
+	long  = {Central Processing Uni} ,
+	class = {abbrev}
+}
+\DeclareAcronym{os}{
+	short = {OS} ,
+	long  = {Operating System} ,
+	class = {abbrev}
+}
+\DeclareAcronym{lc}{
+	short = {LC} ,
+	long  = {Land Cover} ,
+	class = {abbrev}
+}
+\DeclareAcronym{wms}{
+	short = {WMS} ,
+	long  = {Web Map Service} ,
+	class = {abbrev}
+}
+
+%\includeonly{Chapter0, Chapter1}
+
+\begin{document}
+\pagestyle{blank}
+\include{Chapter0}
+\renewcommand{\baselinestretch}{0.95}\normalsize
+\tableofcontents
+\renewcommand{\baselinestretch}{1.0}\normalsize
+\clearpage
+\listoffigures
+\addcontentsline{toc}{section}{List of Figures}
+\clearpage
+\listoftables
+\addcontentsline{toc}{section}{List of Tables}
+\clearpage
+\printacronyms[include-classes=abbrev,name=List of Abbreviations, sort=true]
+\addcontentsline{toc}{section}{List of Abbreviations}
+\clearpage
+\pagestyle{custom}
+\pagenumbering{arabic} 
+\include{Chapter1}
+\include{Chapter2}
+\include{Chapter3}
+\include{Chapter4}
+\include{Chapter5}
+\newpage
+\pagestyle{blank}
+\bibliography{Reference}
+\addcontentsline{toc}{section}{References}
+\setcounter{secnumdepth}{0}
+\include{Appendices}
+
+\end{document}
