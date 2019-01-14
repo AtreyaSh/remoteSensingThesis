@@ -18,7 +18,7 @@ The base directory contains the `tex` files used for compiling the thesis manusc
 $ sudo apt-get install python-pygments
 ```
 
-Compilation of the tex files into pdf requires the following command with a `--shell-escape` for the `minted` tex-package to work.
+Compilation of the tex files into pdf requires the following command with a `--shell-escape` for the `minted` tex-package to work. Due to size related issues, the directory containing images has been excluded but is available upon request.
 
 ```shell
 $ pdflatex --shell-escape -synctex=1 -interaction=nonstopmode Thesis_Manuscript.tex
