@@ -24,7 +24,7 @@ Compilation of the tex files into pdf requires the following command with a `--s
 $ pdflatex --shell-escape -synctex=1 -interaction=nonstopmode Thesis_Manuscript.tex
 ```
 
-The output of pdflatex was further compressed using `ghostscript` with the following command:
+The output of pdflatex was further compressed using `ghostscript` (referenced from https://askubuntu.com/questions/113544/how-can-i-reduce-the-file-size-of-a-scanned-pdf-file) with the following command:
 
 ```shell
 $ gs -sDEVICE=pdfwrite -dPDFSETTINGS=/prepress -dCompatibilityLevel=1.4 -dNOPAUSE -dQUIET -dBATCH -sOutputFile=reduced.pdf Thesis_Manuscript.pdf
