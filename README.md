@@ -10,7 +10,7 @@ The following repositories cover the methodologies of this thesis in further det
 
 2. vegMonitor (https://github.com/atreyasha/vegMonitor)
 
-## Guide for Ubuntu 16.04
+## Guide
 
 The base directory contains the `tex` files used for compiling the thesis manuscript. Compilation requires an installation of `python-pygments`, which can be done by executing the following:
 
