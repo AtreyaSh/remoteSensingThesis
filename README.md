@@ -6,9 +6,9 @@ This repository contains the latex code for my personal thesis entitled above. T
 
 The following repositories cover the methodologies of this thesis in further detail:
 
-1. geeBulkFilter (https://github.com/atreyasha/geeBulkFilter)
+1. geeBulkFilter (https://github.com/atreyasha/gee-landsat-filter)
 
-2. vegMonitor (https://github.com/atreyasha/vegMonitor)
+2. vegMonitor (https://github.com/atreyasha/vegetation-monitoring)
 
 ## Guide
 
